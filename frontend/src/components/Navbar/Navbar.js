@@ -23,7 +23,7 @@ export const Navbar = (props) => {
     >
       <Brand
         className="sidebar-brand d-flex align-items-center justify-content-center"
-        brandName="Seli React Boilerplate"
+        brandName="File Classifier"
       />
 
       <Divider />
