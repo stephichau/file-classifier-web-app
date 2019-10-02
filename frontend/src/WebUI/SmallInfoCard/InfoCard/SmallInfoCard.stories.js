@@ -2,9 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import SmallInfoCard from './index';
 
-const categoryName = 'AssembledComponents/AddButton';
+const categoryName = 'AssembledComponents/Cards';
 
-storiesOf(categoryName, module).add('AddButton', () => {
+storiesOf(categoryName, module).add('SmallInfoCards', () => {
   const defaultProps = {
     title: 'IIC2233',
     subtitle: 'Programación Avanzada',
