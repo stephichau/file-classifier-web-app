@@ -33,10 +33,11 @@
     "react-toastify": "^5.3.2",
     "redux": "latest",
     "redux-saga": "^1.0.2",
+    "storybook": "^1.0.0",
     "sweetalert": "^2.1.2"
   },
   "scripts": {
-    "storybook": "start-storybook",
+    "storybook": "start-storybook -p 9001 -c .storybook",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts start",

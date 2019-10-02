@@ -1,44 +1,47 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true
-  },
-  "extends": "airbnb",
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
   "parser": "babel-eslint",
+  "extends": [
+    "airbnb"
+  ],
+  "env": {
+    "jest": true,
+    "node": true,
+    "browser": true
+  },
   "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    }
   },
   "plugins": [
-    "react"
+    "react",
+    "jsx-a11y",
+    "react-hooks"
   ],
-  "rules": {
-    "comma-dangle": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-  },
-  "overrides": [
-    {
-      "files": [
-        "**/*.test.js"
-      ],
-      "env": {
-        "jest": true
-      },
-      "plugins": ["jest"],
-      "rules": {
-        "jest/no-disabled-tests": "warn",
-        "jest/no-focused-tests": "error",
-        "jest/no-identical-title": "error",
-        "jest/prefer-to-have-length": "warn",
-        "jest/valid-expect": "error"
-      }
+  "settings": {
+    "react": {
+      "version": "detect"
     }
-  ]
+  },
+  "rules": {
+    "react/forbid-prop-types": 0,
+    "react/no-array-index-key": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "react/jsx-filename-extension": [1, {
+      "extensions": [".js", ".jsx"]
+    }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          ".storybook/**",
+          "!*.stories.js"
+        ]
+      }
+    ]
+  }
 }
