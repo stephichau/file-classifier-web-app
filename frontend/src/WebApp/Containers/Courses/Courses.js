@@ -27,6 +27,13 @@ const Courses = ({
       </Typography>
       <div className={classes.cardContainer}>
         {
+          loading && Array(courseCount).fill().map((_, index) => (
+            <div className={classes.card}>
+              <SkeletonSmallInfoCard title subtitle key={`Info--${index}`} />
+            </div>
+          ))
+        }
+        {
           !loading && courses && courses.map((course, index) => (
             <div className={classes.card}>
               <SmallInfoCard {...course} key={`Info--${index}`}>
@@ -36,11 +43,17 @@ const Courses = ({
           ))
         }
         {
-          loading && Array(courseCount).fill().map((_, index) => (
+          !loading && (
             <div className={classes.card}>
-              <SkeletonSmallInfoCard title subtitle key={`Info--${index}`} />
+              <SmallInfoCard
+                borderStyle="dotted"
+              >
+                <div className={classes.addCourse}>
+                  {i18n.addCourse}
+                </div>
+              </SmallInfoCard>
             </div>
-          ))
+          )
         }
       </div>
     </div>
@@ -55,7 +68,8 @@ Courses.defaultProps = {
   },
   loading: true,
   i18n: {
-    courses: 'Courses',
+    courses: 'Cursos',
+    addCourse: '+ Agregar curso',
   },
 };
 
