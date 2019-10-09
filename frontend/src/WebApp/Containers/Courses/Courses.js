@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { toast } from 'react-toastify';
 import {
   SmallInfoCard,
   SkeletonSmallInfoCard,
+  Toast,
+  ToastWrapper,
 } from '../../../WebUI';
 
 
@@ -15,48 +19,51 @@ const Courses = ({
 }) => {
 
   const onClick = () => {
-
+    
   };
 
   const { courseCount, courses } = data;
 
   return (
-    <div className={classes.container}>
-      <Typography>
-        {i18n.courses}
-      </Typography>
-      <div className={classes.cardContainer}>
-        {
-          loading && Array(courseCount).fill().map((_, index) => (
-            <div className={classes.card}>
-              <SkeletonSmallInfoCard title subtitle key={`Info--${index}`} />
-            </div>
-          ))
-        }
-        {
-          !loading && courses && courses.map((course, index) => (
-            <div className={classes.card}>
-              <SmallInfoCard {...course} key={`Info--${index}`}>
-                <div className={classes.rectangle} />
-              </SmallInfoCard>
-            </div>
-          ))
-        }
-        {
-          !loading && (
-            <div className={classes.card}>
-              <SmallInfoCard
-                borderStyle="dotted"
-              >
-                <div className={classes.addCourse}>
-                  {i18n.addCourse}
-                </div>
-              </SmallInfoCard>
-            </div>
-          )
-        }
+    <>
+      <div className={classes.container}>
+        <Typography>
+          {i18n.courses}
+        </Typography>
+        <div className={classes.cardContainer}>
+          {
+            loading && Array(courseCount).fill().map((_, index) => (
+              <div className={classes.card}>
+                <SkeletonSmallInfoCard title subtitle key={`Info--${index}`} />
+              </div>
+            ))
+          }
+          {
+            !loading && courses && courses.map((course, index) => (
+              <ButtonBase className={classes.card}>
+                <SmallInfoCard {...course} key={`Info--${index}`}>
+                  <div className={classes.rectangle} />
+                </SmallInfoCard>
+              </ButtonBase>
+            ))
+          }
+          {
+            !loading && (
+              <ButtonBase className={classes.card}>
+                <SmallInfoCard
+                  borderStyle="dotted"
+                >
+                  <div className={classes.addCourse}>
+                    {i18n.addCourse}
+                  </div>
+                </SmallInfoCard>
+              </ButtonBase>
+            )
+          }
+        </div>
       </div>
-    </div>
+      <ToastWrapper />
+    </>
   );
 };
 
