@@ -1,0 +1,1 @@
+// config the different options either in the Course Component or in the passingProps file
