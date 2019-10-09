@@ -21,11 +21,11 @@ const SkeletonSmallInfoCard = ({
         [classes.onlyTitle]: !subtitle,
       })}>
         <Typography className={classes.title}>
-          <Skeleton height={20} width={240} variant="rect" />
+          <Skeleton height={20} width={210} variant="rect" />
         </Typography>
         {subtitle && (
           <Typography>
-            <Skeleton height={20} width={340} variant="rect" />
+            <Skeleton height={20} width={310} variant="rect" />
           </Typography>
         )}
       </div>
