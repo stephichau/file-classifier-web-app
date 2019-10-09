@@ -21,11 +21,11 @@ const SkeletonSmallInfoCard = ({
         [classes.onlyTitle]: !subtitle,
       })}>
         <Typography className={classes.title}>
-          <Skeleton height={20} width={240} variant="rect" />
+          <Skeleton height={20} width={210} variant="rect" />
         </Typography>
         {subtitle && (
           <Typography>
-            <Skeleton height={20} width={340} variant="rect" />
+            <Skeleton height={20} width={310} variant="rect" />
           </Typography>
         )}
       </div>
@@ -35,16 +35,16 @@ const SkeletonSmallInfoCard = ({
 );
 
 SkeletonSmallInfoCard.defaultProps = {
-  title: undefined,
-  subtitle: undefined,
+  title: false,
+  subtitle: false,
   children: undefined,
   borderStyle: 'default',
 };
 
 SkeletonSmallInfoCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
+  title: PropTypes.bool,
+  subtitle: PropTypes.bool,
   children: PropTypes.node,
   borderStyle: PropTypes.oneOf(['solid', 'dotted']),
 };
