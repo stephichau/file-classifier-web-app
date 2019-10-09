@@ -19,7 +19,7 @@ const SmallInfoCard = ({
       <div className={classnames(classes.textContainer, {
         [classes.onlyTitle]: !subtitle,
       })}>
-        <Typography>
+        <Typography className={classes.title}>
           {title}
         </Typography>
         {subtitle && (
