@@ -28,7 +28,7 @@ Toast.defaultProps = {
 
 Toast.propTypes = {
   onClick: PropTypes.func,
-  closeToast: PropTypes.func.isRequired, // Injected automatically when calling toast()
+  closeToast: PropTypes.func.isRequired,
   title: PropTypes.string,
   content: PropTypes.node.isRequired,
   classes: PropTypes.object.isRequired,

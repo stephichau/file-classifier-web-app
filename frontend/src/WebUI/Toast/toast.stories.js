@@ -58,8 +58,8 @@ storiesOf(categoryName, module)
           variant="outlined"
           onClick={() => toast.success(
             <Toast
-              text="Textttttt"
-              buttonContent="View"
+              title="Textttttt"
+              content="View"
               // eslint-disable-next-line no-alert
               onClick={() => alert('alert')}
             />,
