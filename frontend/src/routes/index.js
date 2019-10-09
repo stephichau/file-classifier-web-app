@@ -6,13 +6,14 @@ import NotFound from '../containers/NotFound/NotFound';
 import Error from '../containers/Error/Error';
 import {
   Courses,
+  Course,
 } from '../WebApp/Containers';
 
 const routes = () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route exact path="/courses" component={Courses} />
-    <Route path="/courses/:courseId" component={Courses} />
+    <Route path="/courses/:courseId" component={Course} />
     <Route path="/404" component={NotFound} />
     <Route path="/500" component={Error} />
     <Redirect from="*" to="/404" />
