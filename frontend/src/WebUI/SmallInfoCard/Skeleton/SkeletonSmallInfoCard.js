@@ -35,16 +35,16 @@ const SkeletonSmallInfoCard = ({
 );
 
 SkeletonSmallInfoCard.defaultProps = {
-  title: undefined,
-  subtitle: undefined,
+  title: false,
+  subtitle: false,
   children: undefined,
   borderStyle: 'default',
 };
 
 SkeletonSmallInfoCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  title: PropTypes.string,
-  subtitle: PropTypes.string,
+  title: PropTypes.bool,
+  subtitle: PropTypes.bool,
   children: PropTypes.node,
   borderStyle: PropTypes.oneOf(['solid', 'dotted']),
 };

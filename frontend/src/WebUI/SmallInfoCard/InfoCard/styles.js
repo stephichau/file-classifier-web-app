@@ -3,6 +3,7 @@ export default theme => ({
     border: '1px solid rgba(0,0,0,0.12)',
     boxShadow: '0 0 2px 1px rgba(0,0,0,0.12)',
     height: 150,
+    width: 350,
   },
   solid: {
     borderStyle: 'solid',
