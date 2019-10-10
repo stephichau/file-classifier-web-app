@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '@material-ui/core/Button';
 import {
-  Toast, LoadingToast, ToastWrapper,
+  LoadingToast, ToastWrapper,
 } from './index';
 
 import { toast } from 'react-toastify';
@@ -55,17 +55,6 @@ storiesOf(categoryName, module)
           )}
         >
           Loading toast
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={() => toast.success(
-            <Toast
-              content="View"
-              onClick={() => {}}
-            />,
-          )}
-        >
-          Open alert
         </Button>
         <ToastWrapper {...defaultProps} />
       </div>
