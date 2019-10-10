@@ -25,7 +25,6 @@ const categoryName = 'ElementalComponents';
 storiesOf(categoryName, module)
   .add('Toast', () => {
     const content = 'Content';
-    const toastOptions = types[0];
     const defaultProps = {
       position: position[0],
       i18n: {
@@ -34,36 +33,36 @@ storiesOf(categoryName, module)
     };
 
     return (
-      <div style={{ padding: '50px', backgroundColor: 'white' }}>
+      <div
+        style={{
+          padding: '50px',
+          backgroundColor: 'white',
+          display: 'flex',
+          flexDirection: 'column',
+          width: '20%',
+        }}>
         <Button
-          variant="contained"
+          variant="outlined"
           color="primary"
-          onClick={() => toast(content, toastOptions)}
+          onClick={() => toast(content, { type: 'info' })}
         >
           Normal toast
         </Button>
-        <br />
-        <br />
         <Button
           variant="outlined"
           onClick={() => toast(
-            <LoadingToast content={defaultProps.i18n.inProgress} />, { autoClose: false },
+            <LoadingToast content={defaultProps.i18n.inProgress} />, { closeButton: false },
           )}
         >
           Loading toast
         </Button>
-        <br />
-        <br />
         <Button
           variant="outlined"
           onClick={() => toast.success(
             <Toast
-              title="Textttttt"
               content="View"
-              // eslint-disable-next-line no-alert
-              onClick={() => alert('alert')}
+              onClick={() => {}}
             />,
-            { autoClose: 500 },
           )}
         >
           Open alert

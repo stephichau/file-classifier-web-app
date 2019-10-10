@@ -1,43 +1,65 @@
-import color from 'color';
+import { palette } from '../../WebTheme';
 
 export default theme => ({
   toast: {
     '&.Toastify__toast--success': {
-      backgroundColor: 'green',
-      color: 'lightGreen',
+      backgroundColor: palette.toastSuccess,
+      color: palette.primaryWhite,
     },
     '&.Toastify__toast--error': {
-      backgroundColor: 'red',
-      color: 'white',
+      backgroundColor: palette.toastError,
+      color: palette.primaryWhite,
     },
     '&.Toastify__toast--warning': {
-      backgroundColor: 'yellow',
-      color: 'white',
+      backgroundColor: palette.toastWarning,
+      color: palette.primaryWhite,
     },
     '&.Toastify__toast--info': {
-      backgroundColor: 'lightBlue',
-      color: 'white',
+      backgroundColor: palette.toastInfo,
+      color: palette.primaryWhite,
     },
-
-    '& .Toastify__close-button--default': {
-      color: 'white',
-      opacity: 0.7,
+    '& .Toastify__close-button': {
+      display: 'none',
     },
-    backgroundColor: 'black',
-    color: 'rgba(0,0,0,0.8)',
+    boxShadow: `0 0 8px 4px ${palette.secondaryLightGrey}`,
+    height: 75,
+    backgroundColor: palette.toastDefault,
+    color: palette.primaryWhite,
   },
   progress: {
-    background: color('white').fade(0.2).string(),
+    background: palette.secondaryWhite,
+    height: 5,
+    width: 249,
+    marginLeft: -25,
   },
   spinner: {
-    marginRight: 10,
-    marginLeft: 10,
-    verticalAlign: 'bottom',
+    color: palette.secondaryWhite,
+    marginRight: 15,
   },
-
   button: {
-    color: theme.white,
-    minWidth: 80,
-    marginLeft: 15,
+    color: palette.primaryWhite,
+    minWidth: 120,
+    maxWidth: 200,
+    fontSize: 15,
+    justifyContent: 'flex-start',
+  },
+  toastContainer: {
+    width: 250,
+    position: 'absolute',
+    right: 0,
+    top: 50,
+    zIndex: 10,
+    '& > div.Toastify__toast': {
+      marginBottom: 15,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-end',
+      paddingLeft: 25,
+      '& > div.Toastify__toast-body': {
+        display: 'flex',
+        marginBottom: 20,
+      },
+    },
   },
 });

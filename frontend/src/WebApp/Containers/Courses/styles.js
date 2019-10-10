@@ -2,14 +2,14 @@ export default theme => ({
   container: {
     minWith: 500,
     maxWidth: 1300,
-    margin: '10px 20px',
+    margin: '10px 0px 10px 35px',
   },
   cardContainer: {
     display: 'flex',
     flexWrap: 'wrap',
   },
   card: {
-    margin: '10px 10px 30px 0',
+    margin: '10px 40px 30px 0',
     '&:hover': {
       cursor: 'pointer',
     },

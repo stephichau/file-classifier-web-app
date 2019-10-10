@@ -14,8 +14,11 @@ export default theme => ({
     borderWidth: 2.5,
   },
   textContainer: {
-    padding: '40px 20px 0px 20px',
+    padding: '40px 20px 0px 30px',
     height: 120,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   title: {
     fontWeight: 'bold',

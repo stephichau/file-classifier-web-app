@@ -6,7 +6,7 @@ const CustomBounce = cssTransition({
   enter: 'Toastify__bounce-enter',
   exit: 'Toastify__bounce-exit',
   appendPosition: true,
-  duration: [1000, 1000],
+  duration: [500, 1000],
 });
 
 const ToastWrapper = (props) => {
@@ -18,7 +18,7 @@ const ToastWrapper = (props) => {
       className={classes.toastContainer}
       toastClassName={classes.toast}
       progressClassName={classes.progress}
-      position="bottom-left"
+      position="top-right"
       {...rest}
     />
   );

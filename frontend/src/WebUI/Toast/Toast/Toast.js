@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 const Toast = ({
   classes,
@@ -15,8 +15,7 @@ const Toast = ({
   };
   return (
     <div>
-      {title}
-      <Button className={classes.button} onClick={handleClick}>{content}</Button>
+      <ButtonBase className={classes.button} onClick={handleClick}>{content}</ButtonBase>
     </div>
   );
 };

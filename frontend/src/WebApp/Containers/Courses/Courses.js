@@ -19,7 +19,7 @@ const Courses = ({
 }) => {
 
   const onClick = () => {
-    
+    toast("contenido", { type: 'success', autoClose: 10 });
   };
 
   const { courseCount, courses } = data;
@@ -40,7 +40,7 @@ const Courses = ({
           }
           {
             !loading && courses && courses.map((course, index) => (
-              <ButtonBase className={classes.card}>
+              <ButtonBase className={classes.card} onClick={onClick}>
                 <SmallInfoCard {...course} key={`Info--${index}`}>
                   <div className={classes.rectangle} />
                 </SmallInfoCard>
@@ -62,7 +62,6 @@ const Courses = ({
           }
         </div>
       </div>
-      <ToastWrapper />
     </>
   );
 };

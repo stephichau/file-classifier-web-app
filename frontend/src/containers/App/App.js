@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastWrapper } from '../../WebUI/';
 import Navbar from '../../components/Navbar/Navbar';
 import TopNav from '../../components/Topnav/Topnav';
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';
@@ -48,6 +49,7 @@ export const App = () => {
           <div id="content-wrapper" className="d-flex flex-column">
             <TopNav links={links} />
             <Routes />
+            <ToastWrapper />
           </div>
         </BrowserRouter>
       </div>
