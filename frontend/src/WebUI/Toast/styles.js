@@ -28,9 +28,6 @@ export default theme => ({
   },
   progress: {
     background: palette.secondaryWhite,
-    height: 5,
-    width: 249,
-    marginLeft: -25,
   },
   spinner: {
     color: palette.secondaryWhite,
@@ -51,10 +48,6 @@ export default theme => ({
     zIndex: 10,
     '& > div.Toastify__toast': {
       marginBottom: 15,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      justifyContent: 'flex-end',
       paddingLeft: 25,
       '& > div.Toastify__toast-body': {
         display: 'flex',

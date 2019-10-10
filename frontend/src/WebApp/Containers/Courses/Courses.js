@@ -19,7 +19,7 @@ const Courses = ({
 }) => {
 
   const onClick = () => {
-    toast("contenido", { type: 'success', autoClose: 10 });
+    toast("contenido", { type: 'success' });
   };
 
   const { courseCount, courses } = data;

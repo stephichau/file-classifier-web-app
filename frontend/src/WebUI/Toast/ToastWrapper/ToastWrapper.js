@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ToastContainer, cssTransition } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const CustomBounce = cssTransition({
   enter: 'Toastify__bounce-enter',
   exit: 'Toastify__bounce-exit',
   appendPosition: true,
-  duration: [500, 1000],
+  duration: [800, 500],
 });
 
 const ToastWrapper = (props) => {
   const { classes, ...rest } = props;
   return (
     <ToastContainer
-      autoClose={2000}
+      autoClose={2500}
       transition={CustomBounce}
       className={classes.toastContainer}
       toastClassName={classes.toast}
