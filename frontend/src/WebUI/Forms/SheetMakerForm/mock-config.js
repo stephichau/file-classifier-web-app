@@ -3,6 +3,7 @@ const components = {
   RADIO_BUTTON: require('../../Inputs/RadioButton').default,
   SIMPLE_SELECT: require('../../Inputs/Selects/SimpleSelect').default,
   TEXT_INPUT: require('../../Inputs/TextInput').default,
+  NUMBER_INPUT: require('../../Inputs/NumberInput').default,
 };
 
 export default ({
@@ -76,4 +77,62 @@ export default ({
     },
     ],
   },
+  {
+    component: components.NUMBER_INPUT,
+    id: 'lower-bound',
+    label: i18n.sheetMaker.lowerBound,
+    value: state['lower_bound'] || '',
+    classes,
+    onChange: (e) => onChange({
+      name: 'lower_bound',
+      value: e.target.value,
+    }),
+    max: state['upper_bound'],
+    min: 0,
+  },
+  {
+    component: components.NUMBER_INPUT,
+    id: 'upper-bound',
+    label: i18n.sheetMaker.upperBound,
+    value: state['upper_bound'] || '',
+    classes,
+    onChange: (e) => onChange({
+      name: 'upper_bound',
+      value: e.target.value,
+    }),
+    min: state['lower_bound'] || 1,
+  },
+  {
+    component: components.NUMBER_INPUT,
+    id: 'copies',
+    label: i18n.sheetMaker.copies,
+    value: state['copies'] || '',
+    classes,
+    onChange: (e) => onChange({
+      name: 'copies',
+      value: e.target.value,
+    }),
+    min: 1,
+  },
+  {
+    component: components.SIMPLE_SELECT,
+    id: 'template',
+    label: i18n.sheetMaker.template,
+    value: state.template || '',
+    classes,
+    onChange: (e) => onChange({
+      name: 'template',
+      value: e.target.value,
+    }),
+    options: [
+    {
+      value: 'template_IIC2333',
+      label: 'template_IIC2333',
+    },
+    {
+      value: 'template_IIC1103',
+      label: 'template_IIC1103',
+    },
+    ],
+  }
 ];

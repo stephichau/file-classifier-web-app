@@ -12,7 +12,7 @@ import CheckBoxInput from './CheckBox';
 import {
   SimpleSelectInput,
 } from './Selects';
-
+import NumberInput from './NumberInput';
 
 const categoryName = 'ElementalComponents/';
 
@@ -54,6 +54,13 @@ storiesOf(categoryName, module).add('Inputs', () => {
       }
     ],
   };
+  const numberInputDefaultProps = {
+    id: 'number-input',
+    label: 'NumberInput',
+    classes: createStyles({}),
+    onChange: () => {},
+    value: 10,
+  };
   return (
     <div style={{
       display: 'flex',
@@ -65,6 +72,7 @@ storiesOf(categoryName, module).add('Inputs', () => {
       <RadioButtonInput {...radioButtonDefaultProps} />
       <CheckBoxInput {...checkBoxDefaultProps} />
       <SimpleSelectInput {...simpleSelectInputDefaultProps} />
+      <NumberInput {...numberInputDefaultProps} />
     </div>
   )
 });

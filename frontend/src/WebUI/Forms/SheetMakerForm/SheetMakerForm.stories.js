@@ -34,7 +34,7 @@ storiesOf(categoryName, module).add('SheetMakerForm', () => {
       section: 'Sección',
       instructor: 'Apellido del Instructor',
       lowerBound: 'Límite inferior',
-      upperBount: 'Límite superior',
+      upperBound: 'Límite superior',
       template: 'Nombre del archivo de template',
       copies: 'Copias por alumno',      
     },
