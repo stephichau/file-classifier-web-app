@@ -20,7 +20,7 @@ export default theme => ({
   buttonsContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
-    marginRight: 30,
+    marginRight: 20,
     marginTop: 'auto',
   },
   cancelButton: {
