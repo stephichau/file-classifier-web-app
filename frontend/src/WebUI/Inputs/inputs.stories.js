@@ -9,6 +9,9 @@ import {
 import TextInput from './TextInput';
 import RadioButtonInput from './RadioButton';
 import CheckBoxInput from './CheckBox';
+import {
+  SimpleSelectInput,
+} from './Selects';
 
 
 const categoryName = 'ElementalComponents/';
@@ -34,6 +37,23 @@ storiesOf(categoryName, module).add('Inputs', () => {
     onChange: () => {},
     selected: true,
   };
+  const simpleSelectInputDefaultProps = {
+    id: 'simple-select-props',
+    label: 'SelectOption',
+    selectedValue: 'FirstOption',
+    classes: createStyles({}),
+    onChange: () => {},
+    options: [
+      {
+        value: 'FirstOption',
+        label: 'FirstOption',
+      },
+      {
+        value: 'SecondOption',
+        label: 'SecondOption',
+      }
+    ],
+  };
   return (
     <div style={{
       display: 'flex',
@@ -44,6 +64,7 @@ storiesOf(categoryName, module).add('Inputs', () => {
       <TextInput {...textDefaultProps} />
       <RadioButtonInput {...radioButtonDefaultProps} />
       <CheckBoxInput {...checkBoxDefaultProps} />
+      <SimpleSelectInput {...simpleSelectInputDefaultProps} />
     </div>
   )
 });
