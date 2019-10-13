@@ -1,7 +1,9 @@
 from time import time, asctime, localtime
 import os
 import sys
+import io
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+
 
 from utils.log import cool_print_decoration, cool_print, print_invalid_file
 from utils.file_merger import pdf_merger
@@ -16,9 +18,9 @@ from PIL import Image
 
 TEMPLATE_DIRECTORY = 'TEMPLATES'
 
-def main(_file: str) -> int:
+def main(_data: dict) -> int:
 
-    _data = read_data(_file) if check_file(_file) else {}
+    # _data = read_data(_file) if check_file(_file) else {}
     
     if not _data:
         print_invalid_file(_file)

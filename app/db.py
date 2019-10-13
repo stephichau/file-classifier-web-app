@@ -1,23 +1,17 @@
 import os
-from mongoengine import *
-connect(os.getenv('DB'))
 
-class Year(Document):
-  year = StringField(required=True, max_length=4)
-  meta = {'allow_inheritance': True}
+from pymongo import MongoClient
 
-class Semester(Year):
-  semester = StringField(required=True)
-  meta = {'allow_inheritance': true}
+def create_db_client():
+  mongoport = int(os.getenv('MONGOPORT'))
+  return MongoClient(os.getenv('MONGOSERVER'), mongoport)
 
-class Course(Semester):
-  code = StringField(required=True)
-  meta = {'allow_inheritance': true}
+def create_db_cursor():
+  return create_db_client()[os.getenv('MONGODB')]
 
-class Section(Course):
-  section = StringField(required=True)
-  meta = {'allow_inheritance': true}
+def get_collection(collection: str):
+  return create_db_cursor()[collection]
+  
 
-class Exam(Course):
-  examType = StringField(required=True)
+
 
