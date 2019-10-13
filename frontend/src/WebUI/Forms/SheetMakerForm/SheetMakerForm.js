@@ -7,16 +7,19 @@ const SheetMakerForm = ({
   config,
   ...restOfProps
 }) => {
+  const renderComponent = (option) => {
+    const { component: Component, ...restOfProps } = option;
+    return <Component {...restOfProps} />;
+  };
   return (
     <GenericFormStructure
       {...restOfProps}
     >
-      {
-        config.map(option => {
-          const Component = option.component;
-          <Component {...option} component={null} />
-        })
-      }
+      <div className={classes.container}>
+        {
+          config.map(option => renderComponent(option))
+        }
+      </div>
     </GenericFormStructure>
   );
 };
@@ -29,7 +32,7 @@ SheetMakerForm.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
-    component: PropTypes.node.isRequired,
+    component: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
   }).isRequired).isRequired
 };

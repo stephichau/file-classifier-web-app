@@ -40,7 +40,7 @@ storiesOf(categoryName, module).add('Inputs', () => {
   const simpleSelectInputDefaultProps = {
     id: 'simple-select-props',
     label: 'SelectOption',
-    selectedValue: 'FirstOption',
+    value: 'FirstOption',
     classes: createStyles({}),
     onChange: () => {},
     options: [

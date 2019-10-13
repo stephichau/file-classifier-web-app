@@ -10,7 +10,7 @@ const SimpleSelectInput = ({
   classes,
   id,
   label,
-  selectedValue,
+  value,
   onChange,
   isNative,
   options,
@@ -24,13 +24,14 @@ const SimpleSelectInput = ({
     <FormControl
       variant="outlined"
       className={classes.formControl}
+      margin="normal"
     >
       <InputLabel ref={inputLabel} htmlFor={id}>
-          {label}
+        {label}
       </InputLabel>
       <Select
         native={isNative}
-        value={selectedValue}
+        value={value}
         onChange={onChange}
         labelWidth={labelWidth}
         inputProps={{
@@ -51,14 +52,14 @@ const SimpleSelectInput = ({
 SimpleSelectInput.defaultProps = {
   isNative: true,
   options: [],
-  selectedValue: '',
+  value: '',
 };
 
 SimpleSelectInput.propTypes = {
   classes: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  selectedValue: PropTypes.string,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   isNative: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({
