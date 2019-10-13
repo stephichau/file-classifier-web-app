@@ -8,6 +8,7 @@ import {
 
 import TextInput from './TextInput';
 import RadioButtonInput from './RadioButton';
+import CheckBoxInput from './CheckBox';
 
 
 const categoryName = 'ElementalComponents/';
@@ -24,7 +25,7 @@ storiesOf(categoryName, module).add('Inputs', () => {
     label: 'CheckBox',
     classes: createStyles({}),
     onChange: () => {},
-    checked: false,
+    checked: true,
   };
   const radioButtonDefaultProps = {
     id: 'radio-button',
@@ -37,10 +38,12 @@ storiesOf(categoryName, module).add('Inputs', () => {
     <div style={{
       display: 'flex',
       flexDirection: 'column',
+      width: 400,
+      marginLeft: 120,
     }}>
       <TextInput {...textDefaultProps} />
-      {/* {<CheckBoxInput {...checkBoxDefaultProps} />} */}
       <RadioButtonInput {...radioButtonDefaultProps} />
+      <CheckBoxInput {...checkBoxDefaultProps} />
     </div>
   )
 });
