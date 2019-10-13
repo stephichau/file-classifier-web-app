@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -16,10 +16,12 @@ const Courses = ({
   data,
   loading,
   i18n,
+  history,
 }) => {
+  const { location } = history;
 
-  const onClick = () => {
-
+  const onClick = (courseId) => {
+    history.push(`${location.pathname}/${courseId}`)
   };
 
   const { courseCount, courses } = data;
@@ -40,7 +42,7 @@ const Courses = ({
           }
           {
             !loading && courses && courses.map((course, index) => (
-              <ButtonBase className={classes.card} onClick={onClick}>
+              <ButtonBase className={classes.card} onClick={() => onClick(course.title)}>
                 <SmallInfoCard {...course} key={`Info--${index}`}>
                   <div className={classes.rectangle} />
                 </SmallInfoCard>
@@ -87,6 +89,7 @@ Courses.propTypes = {
   }),
   loading: PropTypes.bool,
   i18n: PropTypes.object,
+  history: PropTypes.object.isRequired,
 };
 
 export default Courses;

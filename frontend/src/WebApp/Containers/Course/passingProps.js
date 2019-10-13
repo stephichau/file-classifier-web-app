@@ -1,5 +1,9 @@
-export default (props) => {
-
+export default ({
+  history,
+  ...restOfProps
+}) => {
+  const { location } = history;
+  const courseName = location.pathname.split('/').slice(-1) || '';
   const options = [
     {
       title: 'Crear hojas de respuestas',
@@ -14,9 +18,9 @@ export default (props) => {
       onClick: () => {}
     },
   ];
-  const courseName = 'IIC2333';
+
   return {
-    ...props,
+    ...restOfProps,
     courseName,
     options,
   };

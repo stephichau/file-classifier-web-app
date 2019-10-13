@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import TopNav from '../../components/Topnav/Topnav';
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';
 import Routes from '../../routes';
+import history from '../../history';
 
 export const App = () => {
   const sections = [
@@ -45,10 +46,10 @@ export const App = () => {
     <div className="App">
       <div id="wrapper">
         <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
-          <Navbar sections={sections} />
+          <Navbar sections={sections} history={history} />
           <div id="content-wrapper" className="d-flex flex-column">
-            <TopNav links={links} />
-            <Routes />
+            <TopNav links={links} history={history} />
+            <Routes history={history} />
             <ToastWrapper />
           </div>
         </BrowserRouter>
