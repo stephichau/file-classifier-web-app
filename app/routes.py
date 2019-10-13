@@ -1,8 +1,15 @@
 from app import app
-from flask import render_template
+from flask import render_template, jsonify, request
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
 
-@app.route('/')
-@app.route('/index')
-def index():
-  user = {'username': 'Cris'}
-  return render_template('index.html', title='Home', user=user)
+@app.route('/make', methods=['POST'])
+def make():
+  data = request
+  print(data.data)
+  response = {'name': 'cristobal', 'pass': 123123}
+  return jsonify(response)
+
+
+
+
