@@ -20,7 +20,12 @@ def create_answer_sheet(_data: dict) -> bool:
 
     return True
 
-  # ans_sheets.insert_one(sheet)
+def get_all_answers():
+  pass
+
+def get_answer_by_id(_id: int):
+  pass
+
 
 
 
