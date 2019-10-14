@@ -7,11 +7,11 @@ import {
   SkeletonSmallInfoCard,
 } from '../../../WebUI';
 
-
 const Course = ({
   classes,
   options,
   courseName,
+  isLoading,
 }) => {
 
   return (
@@ -22,7 +22,7 @@ const Course = ({
       <div className={classes.cardContainer}>
         {
           options && options.map((option, index) => (
-            <ButtonBase className={classes.card} key={`Info--${index}`} onClick={option.onClick}>
+            <ButtonBase className={classes.card} key={`Info--${index}`} disabled={isLoading} onClick={option.onClick}>
               <SmallInfoCard {...option} key={`Info--${index}`} title={null}>
                 <div className={classes.option}>
                   {option.title}
@@ -37,13 +37,14 @@ const Course = ({
 };
 
 Course.defaultProps = {
-  
+  isLoading: false,
 };
 
 Course.propTypes = {
   classes: PropTypes.object.isRequired,
   options: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   courseName: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default Course;

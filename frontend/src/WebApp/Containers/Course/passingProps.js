@@ -1,8 +1,15 @@
+import React from 'react';
+import { toast } from 'react-toastify';
+import { LoadingToast } from '../../../WebUI/Toast';
+
 export default ({
   history,
   showAnswerSheetModal,
+  submitAnswerSheet,
+  hideModal,
   ...restOfProps
 }) => {
+  console.log(restOfProps);
   const { location } = history;
   const courseName = location.pathname.split('/').pop() || '';
   const sheetMakerProps = {
@@ -31,7 +38,11 @@ export default ({
       onClick: () => showAnswerSheetModal({
         title: sheetMakerProps.sheetMaker.title,
         i18n: sheetMakerProps,
-        onSubmit: () => console.log('submitted'),
+        onSubmit: (props) => {
+          toast(<LoadingToast content="En Proceso" />, { closeButton: false });
+          hideModal();
+          submitAnswerSheet(props);
+        },
       })
     },
     {
