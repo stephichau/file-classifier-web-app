@@ -5,31 +5,24 @@ import { ToastWrapper } from '../../WebUI/';
 import Navbar from '../../components/Navbar/Navbar';
 import TopNav from '../../components/Topnav/Topnav';
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop';
+import RootContainer from '../../WebApp/modals/Root';
 import Routes from '../../routes';
 import history from '../../history';
 
 export const App = () => {
   const sections = [
     {
-      heading: 'examples',
+      heading: 'Web App',
       items: [
         {
-          name: 'static pages',
+          name: 'Routes',
           icon: 'fas fa-fw fa-cog',
           items: [
-            { itemName: 'home', itemHref: '/', itemIcon: 'fas fa-fw fa-home' },
-            { itemName: '404', itemHref: '/404' },
-            { itemName: '500', itemHref: '/500' }
+             { itemName: 'Courses', itemHref: '/courses', itemIcon: 'fas fa-fw fa-home' },
+          //   { itemName: '404', itemHref: '/404' },
+          //   { itemName: '500', itemHref: '/500' }
           ]
         },
-        {
-          name: 'dynamic pages',
-          icon: 'fas fa-fw fa-cog',
-          items: [
-            { itemName: 'users', itemHref: '/users' },
-            { itemName: 'colors', itemHref: '/colors' }
-          ]
-        }
       ]
     }
   ];
@@ -50,6 +43,7 @@ export const App = () => {
           <div id="content-wrapper" className="d-flex flex-column">
             <TopNav links={links} history={history} />
             <Routes history={history} />
+            <RootContainer />
             <ToastWrapper />
           </div>
         </BrowserRouter>

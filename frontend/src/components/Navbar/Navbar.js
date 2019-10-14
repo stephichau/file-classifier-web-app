@@ -23,7 +23,7 @@ export const Navbar = (props) => {
     >
       <Brand
         className="sidebar-brand d-flex align-items-center justify-content-center"
-        brandName="File Classifier"
+        brandName="DCC File"
       />
 
       <Divider />
@@ -50,10 +50,6 @@ export const Navbar = (props) => {
           </div>
         );
       })}
-
-      <div className="text-center d-none d-md-inline">
-        <button className="rounded-circle border-0" id="sidebarToggle" onClick={toggle} type="button" />
-      </div>
     </ul>
   );
 };
