@@ -9,14 +9,16 @@ import {
   Course,
 } from '../WebApp/Containers';
 
-const routes = () => (
+const routes = ({
+  ...restOfProps
+}) => (
   <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/courses" component={Courses} />
-    <Route path="/courses/:courseId" component={Course} />
-    <Route path="/404" component={NotFound} />
-    <Route path="/500" component={Error} />
-    <Redirect from="*" to="/404" />
+    <Route exact path="/" component={Home} {...restOfProps} />
+    <Route exact path="/courses" component={Courses} {...restOfProps}  />
+    <Route path="/courses/:courseId" component={Course} {...restOfProps}  />
+    <Route path="/404" component={NotFound} {...restOfProps} />
+    <Route path="/500" component={Error} {...restOfProps}  />
+    <Redirect from="*" to="/404" {...restOfProps}  />
   </Switch>
 );
 

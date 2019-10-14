@@ -16,11 +16,6 @@ const global = (state = initialState, action) => {
         ...state,
         navbarExpanded: true
       };
-    case actions.ui.COLLAPSE_NAVBAR:
-      return {
-        ...state,
-        navbarExpanded: false
-      };
     case actions.ui.EXPAND_USER_DROPDOWN:
       return {
         ...state,
@@ -42,22 +37,6 @@ const global = (state = initialState, action) => {
         loading: false
       };
     case actions.reqres.GET_USERS_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.error
-      };
-    case actions.reqres.GET_COLORS_REQUEST:
-      return {
-        ...state,
-        loading: true
-      };
-    case actions.reqres.GET_COLORS_SUCCESS:
-      return {
-        ...state,
-        loading: false
-      };
-    case actions.reqres.GET_COLORS_FAILURE:
       return {
         ...state,
         loading: false,
