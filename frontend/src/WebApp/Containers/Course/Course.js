@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import {
   SmallInfoCard,
   SkeletonSmallInfoCard,
@@ -13,7 +14,6 @@ const Course = ({
   courseName,
 }) => {
 
-  
   return (
     <div className={classes.container}>
       <Typography>
@@ -22,13 +22,13 @@ const Course = ({
       <div className={classes.cardContainer}>
         {
           options && options.map((option, index) => (
-            <div className={classes.card}>
+            <ButtonBase className={classes.card} key={`Info--${index}`} onClick={option.onClick}>
               <SmallInfoCard {...option} key={`Info--${index}`} title={null}>
                 <div className={classes.option}>
                   {option.title}
                 </div>
               </SmallInfoCard>
-            </div>
+            </ButtonBase>
           ))
         }
       </div>
