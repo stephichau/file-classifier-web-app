@@ -7,7 +7,6 @@ from .api import create_answer_sheet
 @app.route('/make', methods=['POST'])
 def make():
   # Call to sheet maker in order to create pdf
-  print(request.json)
   _data = request.json 
   _created = create_answer_sheet(_data)
   response = {'sucess': _created}
