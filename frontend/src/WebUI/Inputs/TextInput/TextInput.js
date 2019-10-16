@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 
@@ -8,7 +8,11 @@ const TextInput = ({
   onChange,
   id,
   value,
+  defaultValue,
 }) => {
+  useEffect(() => {
+    if (defaultValue) onChange({ target: { value: defaultValue }});
+  }, []);
   return (
     <TextField
       required
@@ -26,6 +30,7 @@ const TextInput = ({
 
 TextInput.defaultProps = {
   value: '',
+  defaultValue: undefined,
 };
 
 TextInput.propTypes = {
@@ -34,6 +39,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  defaultValue: PropTypes.oneOf([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
 };
 
 export default TextInput;

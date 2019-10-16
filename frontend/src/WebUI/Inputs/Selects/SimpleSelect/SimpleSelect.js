@@ -14,11 +14,13 @@ const SimpleSelectInput = ({
   onChange,
   isNative,
   options,
+  defaultValue,
 }) => {
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
+    if (defaultValue) onChange({ target: { value: defaultValue }});
   }, []);
   return (
     <FormControl
@@ -53,6 +55,7 @@ SimpleSelectInput.defaultProps = {
   isNative: true,
   options: [],
   value: '',
+  defaultValue: undefined,
 };
 
 SimpleSelectInput.propTypes = {
@@ -66,6 +69,7 @@ SimpleSelectInput.propTypes = {
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })),
+  defaultValue: PropTypes.oneOf([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
 };
 
 export default SimpleSelectInput;

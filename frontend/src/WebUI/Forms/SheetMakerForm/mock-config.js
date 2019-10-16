@@ -22,6 +22,7 @@ export default ({
       name: 'course',
       value: e.target.value,
     }),
+    defaultValue: '',
   },
   {
     component: components.TEXT_INPUT,
@@ -33,6 +34,7 @@ export default ({
       name: 'evaluation',
       value: e.target.value,
     }),
+    defaultValue: '',
   },
   {
     component: components.TEXT_INPUT,
@@ -44,6 +46,7 @@ export default ({
       name: 'year',
       value: e.target.value,
     }),
+    defaultValue: 2019,
   },
   {
     component: components.TEXT_INPUT,
@@ -55,6 +58,7 @@ export default ({
       name: 'instructor',
       value: e.target.value,
     }),
+    defaultValue: '',
   },
   {
     component: components.SIMPLE_SELECT,
@@ -76,6 +80,7 @@ export default ({
       label: '2',
     },
     ],
+    defaultValue: '1',
   },
   {
     component: components.NUMBER_INPUT,
@@ -89,6 +94,7 @@ export default ({
     }),
     max: state['upper_bound'],
     min: 0,
+    defaultValue: 0,
   },
   {
     component: components.NUMBER_INPUT,
@@ -101,6 +107,7 @@ export default ({
       value: e.target.value,
     }),
     min: state['lower_bound'] || 1,
+    defaultValue: 1,
   },
   {
     component: components.NUMBER_INPUT,
@@ -113,6 +120,7 @@ export default ({
       value: e.target.value,
     }),
     min: 1,
+    defaultValue: 1,
   },
   {
     component: components.SIMPLE_SELECT,
@@ -134,5 +142,6 @@ export default ({
       label: 'template_IIC1103',
     },
     ],
+    defaultValue: 'template_IIC2333',
   }
 ];

@@ -1,15 +1,25 @@
 import React from 'react';
 import { toast } from 'react-toastify';
+import get from 'loadsh/get';
 import { LoadingToast } from '../../../WebUI/Toast';
+import actions from '../../../store/actions';
+import config from './section-config';
 
 export default ({
   history,
   showAnswerSheetModal,
   submitAnswerSheet,
   hideModal,
+  generic,
   ...restOfProps
 }) => {
-  console.log(restOfProps);
+
+  let {
+    answerSheet: {
+      POST_ANSWER_SHEET_REQUEST: POST_ANSWER_SHEET,
+    },
+  } = actions;
+
   const { location } = history;
   const courseName = location.pathname.split('/').pop() || '';
   const sheetMakerProps = {
@@ -32,31 +42,25 @@ export default ({
     },
   };
 
-  const options = [
-    {
-      title: sheetMakerProps.sheetMaker.title,
-      onClick: () => showAnswerSheetModal({
-        title: sheetMakerProps.sheetMaker.title,
-        i18n: sheetMakerProps,
-        onSubmit: (props) => {
-          toast(<LoadingToast content="En Proceso" />, { closeButton: false });
-          hideModal();
-          submitAnswerSheet(props);
-        },
-      })
-    },
-    {
-      title: 'Clasificar pruebas escaneadas',
-      onClick: () => {}
-    },
-    {
-      title: 'Ver pruebas clasificadas',
-      onClick: () => {}
-    },
-  ];
+  const loadToast = () => toast(<LoadingToast content="En Proceso" />, { closeButton: false });
+
+  const options = config({
+    sheetMakerProps,
+    showAnswerSheetModal,
+    hideModal,
+    loadToast,
+    submitAnswerSheet,
+  });
+
+  POST_ANSWER_SHEET = POST_ANSWER_SHEET.replace('_REQUEST', '');
+
+  const isLoading = get(generic, `${POST_ANSWER_SHEET}.loading`) || false;
+
   return {
     ...restOfProps,
+    generic,
     courseName,
     options,
+    isLoading,
   };
 }
