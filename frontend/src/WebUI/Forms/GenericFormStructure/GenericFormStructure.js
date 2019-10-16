@@ -11,6 +11,7 @@ const GenericFormStructure = ({
   i18n,
   onCancel,
   onSubmit,
+  state,
 }) => (
   <Paper
     elevation={0}
@@ -28,7 +29,7 @@ const GenericFormStructure = ({
           {i18n.cancel}
         </Typography>
       </Button>
-      <Button onClick={onSubmit} variant="contained" className={classes.submitButton}>
+      <Button onClick={() => onSubmit(state)} variant="contained" className={classes.submitButton}>
         <Typography>
           {i18n.submit}
         </Typography>
@@ -41,6 +42,7 @@ GenericFormStructure.defaultProps = {
   children: undefined,
   onSubmit: () => {},
   onCancel: () => {},
+  state: {},
 };
 
 GenericFormStructure.propTypes = {
@@ -50,6 +52,7 @@ GenericFormStructure.propTypes = {
   i18n: PropTypes.object.isRequired,
   onSubmit: PropTypes.func,
   onCancel: PropTypes.func,
+  state: PropTypes.object,
 };
 
 export default GenericFormStructure;

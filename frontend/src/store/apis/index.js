@@ -1,5 +1,5 @@
-import reqres from './reqres';
+import answerSheets from './answerSheets';
 
 export default {
-  reqres
+  answerSheets,
 }

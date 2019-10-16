@@ -10,8 +10,19 @@ const SheetMakerModal = ({
   i18n,
   ...restOfProps
 }) => {
-  const [state, setState] = useState({});
-  const onChange = ({
+  const [state, setState] = useState({
+    ocr: 'qr',
+    course: '',
+    semester: 2,
+    year: 2019,
+    'lower_bound': 0,
+    'upper_bound': null,
+    evaluation: '',
+    instructor: '',
+    copies: 1,
+    template: 'template_IIC2333',
+  });
+  const onChange = async ({
     name,
     value
   }) => {
@@ -33,6 +44,7 @@ const SheetMakerModal = ({
         i18n={i18n.form}
         classes={classes}
         config={config}
+        state={state}
         {...restOfProps}
       />
     </GenericModal>
