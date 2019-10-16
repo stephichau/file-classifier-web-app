@@ -6,3 +6,4 @@ pymongo==3.5.1
 Wand==0.4.4
 colorama==0.3.9
 tqdm==4.31.1
+flask-cors==3.0.8
