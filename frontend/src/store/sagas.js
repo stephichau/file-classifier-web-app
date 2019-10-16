@@ -12,7 +12,6 @@ const {
 function* postAnswerSheets(action) {
   try {
     const response = yield call(API.answerSheets.post, action.props);
-    console.log(response);
     yield put({
       type: POST_ANSWER_SHEET_SUCCESS,
       payload: 200,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import get from 'loadsh/get';
 import { LoadingToast } from '../../../WebUI/Toast';
@@ -14,11 +14,13 @@ export default ({
   ...restOfProps
 }) => {
 
-  let {
+  const {
     answerSheet: {
-      POST_ANSWER_SHEET_REQUEST: POST_ANSWER_SHEET,
+      POST_ANSWER_SHEET,
     },
   } = actions;
+
+  const [toastId, setToastId] = useState(null);
 
   const { location } = history;
   const courseName = location.pathname.split('/').pop() || '';
@@ -42,17 +44,25 @@ export default ({
     },
   };
 
-  const loadToast = () => toast(<LoadingToast content="En Proceso" />, { closeButton: false });
+  const loadToast = (toastId = null, restOfProps = {}) => {
+    if (toastId) return toast.update(toastId, restOfProps);
+    return toast(<LoadingToast content="En Proceso" />, { closeButton: false });
+  };
+
+  if (generic[[POST_ANSWER_SHEET]]) {
+    if (!generic[POST_ANSWER_SHEET].loading) hideModal();
+    if (generic[POST_ANSWER_SHEET].payload) loadToast(toastId, { type: 'success', closeButton: false, render: 'Creando hojas...' })
+    if (generic[POST_ANSWER_SHEET].error) loadToast(toastId, { type: 'error', closeButton: false, render: 'Hubo un error. Intente nuevamente' })
+  }
 
   const options = config({
     sheetMakerProps,
     showAnswerSheetModal,
-    hideModal,
     loadToast,
     submitAnswerSheet,
+    toastLoaded: setToastId,
   });
 
-  POST_ANSWER_SHEET = POST_ANSWER_SHEET.replace('_REQUEST', '');
 
   const isLoading = get(generic, `${POST_ANSWER_SHEET}.loading`) || false;
 

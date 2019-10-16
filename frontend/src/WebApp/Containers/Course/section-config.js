@@ -1,17 +1,11 @@
 import actions from '../../../store/actions';
-const {
-  answerSheet: {
-    POST_ANSWER_SHEET_REQUEST,
-  },
-} = actions;
 
 export default ({
   sheetMakerProps,
   showAnswerSheetModal,
   loadToast,
-  hideModal,
   submitAnswerSheet,
-  generic,
+  toastLoaded,
 }) => [
   {
     title: sheetMakerProps.sheetMaker.title,
@@ -20,9 +14,8 @@ export default ({
       i18n: sheetMakerProps,
       onSubmit: (props) => {
         const toastId = loadToast();
-        console.log(toastId);
-        hideModal();
         submitAnswerSheet(props);
+        toastLoaded(toastId);
       },
     }),
   },

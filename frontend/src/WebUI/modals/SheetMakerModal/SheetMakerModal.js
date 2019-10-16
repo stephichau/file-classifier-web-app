@@ -16,7 +16,7 @@ const SheetMakerModal = ({
     semester: 2,
     year: 2019,
     'lower_bound': 0,
-    'upper_bound': 1,
+    'upper_bound': null,
     evaluation: '',
     instructor: '',
     copies: 1,

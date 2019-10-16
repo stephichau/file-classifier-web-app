@@ -106,8 +106,8 @@ export default ({
       name: 'upper_bound',
       value: e.target.value,
     }),
-    min: state['lower_bound'] || 1,
-    defaultValue: 1,
+    min: state['lower_bound'],
+    defaultValue: null,
   },
   {
     component: components.NUMBER_INPUT,
