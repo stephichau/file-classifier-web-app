@@ -20,11 +20,22 @@ def create_answer_sheet(_data: dict) -> bool:
 
     return True
 
+def create_course(_data: dict) -> bool:
+  courses = get_collection('courses')
+  
+  
+
 def get_all_answers():
-  pass
+  cursor = get_collection('answer_sheet')
+  return cursor.find()
+  
 
 def get_answer_by_id(_id: int):
-  pass
+  cursor = get_collection('answer_sheet')
+  sheet = cursor.find({'id': _id})
+  if sheet:
+    return sheet
+
 
 
 

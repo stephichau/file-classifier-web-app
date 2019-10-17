@@ -33,8 +33,13 @@ def create_answer():
     return response, 500 
 
 @app.route('/answer/<int:answer_id>', methods=['DELETE'])
-def delete_answer(answer_id)
+def delete_answer(answer_id):
   pass
+
+@app.route('/answer/download/<int:answer_id>')
+def download_answer(answer_id):
+  pass
+
 
 
 
