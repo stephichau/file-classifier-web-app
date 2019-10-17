@@ -1,9 +1,19 @@
 from app import app
 from flask import render_template, jsonify, request
-# from flask_httpauth import HTTPBasicAuth
-from werkzeug.security import generate_password_hash, check_password_hash
-from .api import create_answer_sheet, get_all_answers, get_answer_by_id
+from .api import create_answer_sheet, get_all_answers, get_answer_by_id, create_course
 
+@app.route('/course', methods=['GET'])
+def get_courses():
+  pass
+
+@app.route('/course', methods=['POST'])
+def create_course():
+  _data = request.json
+  _created = create_course(_data)
+  response = {'success': _created}
+  if _created:
+    return response, 200
+  return response, 500
 
 @app.route('/answers', methods=['GET'])
 def get_answers():
@@ -18,8 +28,7 @@ def get_answer(answer_id):
   response = get_answer_by_id(12):
   if response:
     return response, 200
-  else:
-    return response, 500
+  return response, 500
 
 @app.route('/answer/create', methods=['POST'])
 def create_answer():
