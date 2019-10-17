@@ -21,27 +21,38 @@ class Answer(Document):
   template = FileField(required=True)
   answer_file = FileField(required=True)
 
+def doc_to_json(doc):
+  try:
+    return doc.to_json()
+  except:
+    return {}
 
 def create_course_doc(data: dict) -> bool:
   _course = Course()
   _course.name = str(data['course']).lower()
   _course.semester = int(data['semester'])
   _course.year = str(data['year']).lower()
-  _course.instructor = str(data['instructor'])
+  _course.instructor = str(data['instructor']).lower()
   _course.section = int(data['section'])
-  return True if _course.save() else False
+  return _course if _course.save() else False
 
 def get_course_doc(data: dict):
   _course = Course.objects(
     name = str(data['course']).lower(),
     semester = int(data['semester']),
     year = str(data['year']).lower(),
-    instructor = str(data['instructor']),
+    instructor = str(data['instructor']).lower(),
     section = int(data['section'])
   )
-  return _course.to_json() if _course else {}
+  return _course if _course else None
 
-
+def delete_course_doc(data: dict):
+  _course = get_course_doc(data)
+  _temp = _course
+  if _course:
+    _course.delete()
+    return _temp
+  return None
 
 def create_answer_sheet(_data: dict) -> bool:
   ans_sheets = get_collection('answer_sheets')

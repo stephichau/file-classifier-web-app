@@ -1,6 +1,11 @@
 from app import app
 from flask import render_template, jsonify, request
-from .api import create_answer_sheet, get_all_answers, get_answer_by_id, create_course_doc, get_course_doc
+from .api import ( 
+                  create_answer_sheet, get_all_answers, 
+                  get_answer_by_id, create_course_doc, 
+                  get_course_doc, delete_course_doc,
+                  doc_to_json
+)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -9,16 +14,27 @@ def index():
 @app.route('/course', methods=['GET'])
 def get_course():
   _data = request.json
-  _course = get_course_doc(_data)
+  _course = doc_to_json(get_course_doc(_data))
   response = {'course': _course}
-  return jsonify(response), 200
+  if _course:
+    return response, 200
+  return response, 500
   
 @app.route('/course', methods=['POST'])
 def create_course():
   _data = request.json
-  _created = create_course_doc(_data)
-  response = {'success': _created}
+  _created = doc_to_json(create_course_doc(_data))
+  response = {'course': _created}
   if _created:
+    return response, 200
+  return response, 500
+
+@app.route('/course', methods=['DELETE'])
+def delete_course():
+  _data = request.json
+  _deleted = doc_to_json(delete_course_doc(_data))
+  response = {'course': _deleted}
+  if _deleted:
     return response, 200
   return response, 500
 
@@ -27,8 +43,7 @@ def get_answers():
   response = get_all_answers()
   if response:
     return response, 200
-  else:
-    return response, 500
+  return response, 500
 
 @app.route('/answers/<int:answer_id>', methods=['GET'])
 def get_answer(answer_id):
