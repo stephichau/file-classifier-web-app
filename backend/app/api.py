@@ -44,7 +44,7 @@ def get_course_doc(data: dict):
     instructor = str(data['instructor']).lower(),
     section = int(data['section'])
   )
-  return _course if _course else None
+  return _course if _course else False
 
 def delete_course_doc(data: dict):
   _course = get_course_doc(data)
@@ -52,33 +52,44 @@ def delete_course_doc(data: dict):
   if _course:
     _course.delete()
     return _temp
-  return None
+  return False
+
+def get_answer_doc(data: dict):
+  pass
+
+def create_answer_doc(data: dict):
+  _course = get_course_doc(data)
+  _template = None
+  print(_course)
+  if _course:
+    print(stri(data['lower_bound']))
+    _answer = Answer()
+    _answer.course = _course,
+    _answer.lower_bound = int(data['lower_bound']),
+    _answer.upper_bound = int(data['upper_bound']),
+    _answer.evaluation = str(data['evaluation']).lower()
+
+    print(_answer)
+    _answer_sheet = create_answer_sheet(data)
+    print(_answer_sheet)
+
+    _answer.answer_file.put(_answer_sheet) 
+    _answer.template.put(_answer_sheet)
+
+    if _answer.save():
+      return _answer
+    return False
+    # return _answer if _answer.save() else False
 
 def create_answer_sheet(_data: dict) -> bool:
-  ans_sheets = get_collection('answer_sheets')
-  fs = create_fs_cursor()
   sheet = _data
-
   if make.main(_data):
     COURSE_NAME = _data['course']
     EVALUATION = _data['evaluation']
     ANSWER_SHEETS_DIR_PATH = f'{os.getcwd()}/ANSWER_SHEETS/{COURSE_NAME}_{EVALUATION}/compilation.pdf'
 
     # stores file in mongodb
-    with open(ANSWER_SHEETS_DIR_PATH, 'rb') as pdf:
-      file_id=fs.put(pdf)
-      sheet['file_id'] = file_id
-      ans_sheets.insert_one(sheet)
-
-    return True
-
-def get_all_answers():
-  pass
-  
-
-def get_answer_by_id(_id: int):
-  pass
-
-
-
-
+    return open(ANSWER_SHEETS_DIR_PATH, 'rb')
+      # file_id=fs.put(pdf)
+      # sheet['file_id'] = file_id
+      # ans_sheets.insert_one(sheet)

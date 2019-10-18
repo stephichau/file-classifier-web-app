@@ -1,9 +1,9 @@
 from app import app
 from flask import render_template, jsonify, request
 from .api import ( 
-                  create_answer_sheet, get_all_answers, 
-                  get_answer_by_id, create_course_doc, 
-                  get_course_doc, delete_course_doc,
+                   
+                  create_course_doc, get_course_doc, delete_course_doc,
+                  create_answer_doc,
                   doc_to_json
 )
 
@@ -38,31 +38,38 @@ def delete_course():
     return response, 200
   return response, 500
 
-@app.route('/answers', methods=['GET'])
-def get_answers():
-  response = get_all_answers()
-  if response:
+@app.route('/course/answer', methods=['GET'])
+def get_answer():
+  _data = request.json
+  _answer = doc_to_json(get_answer_doc(_data))
+  response = {'answer': _answer}
+  if _answer:
     return response, 200
   return response, 500
 
-@app.route('/answers/<int:answer_id>', methods=['GET'])
-def get_answer(answer_id):
-  pass
-
-@app.route('/answer/create', methods=['POST'])
+@app.route('/course/answer', methods=['POST'])
 def create_answer():
-  # Call to sheet maker in order to create pdf
-  _data = request.json 
-  _created = create_answer_sheet(_data)
-  response = {'success': _created}
-  if _created:
-    return response, 200 
-  else:
-    return response, 500 
+  _data = request.json
+  _answer = doc_to_json(create_answer_doc(_data))
+  response = {'answer': _answer}
+  if _answer:
+    return response, 200
+  return response, 500
 
-@app.route('/answer/<int:answer_id>', methods=['DELETE'])
-def delete_answer(answer_id):
-  pass
+# @app.route('/answers/<int:answer_id>', methods=['GET'])
+# def get_answer(answer_id):
+#   pass
+
+# @app.route('/answer/create', methods=['POST'])
+# def create_answer():
+#   # Call to sheet maker in order to create pdf
+#   _data = request.json 
+#   _created = create_answer_sheet(_data)
+#   response = {'success': _created}
+#   if _created:
+#     return response, 200 
+#   else:
+#     return response, 500 
 
 @app.route('/answer/download/<int:answer_id>')
 def download_answer(answer_id):
