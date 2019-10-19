@@ -5,6 +5,7 @@ export default ({
   i18n,
   state,
   classes,
+  defaultValue,
 }) => [
   {
     component: components.TEXT_INPUT,
@@ -16,7 +17,7 @@ export default ({
       name: 'course',
       value: e.target.value,
     }),
-    defaultValue: '',
+    defaultValue: defaultValue.course,
   },
   {
     component: components.TEXT_INPUT,
@@ -28,7 +29,7 @@ export default ({
       name: 'year',
       value: e.target.value,
     }),
-    defaultValue: 2019,
+    defaultValue: defaultValue.year,
   },
   {
     component: components.NUMBER_INPUT,
@@ -41,6 +42,7 @@ export default ({
       value: e.target.value,
     }),
     min: 1,
+    defaultValue: defaultValue.section,
   },
   {
     component: components.SIMPLE_SELECT,
@@ -62,7 +64,7 @@ export default ({
       label: '2',
     },
     ],
-    defaultValue: '1',
+    defaultValue: defaultValue.semester,
   },
   {
     component: components.TEXT_INPUT,
@@ -74,6 +76,6 @@ export default ({
       name: 'instructor',
       value: e.target.value,
     }),
-    defaultValue: '',
+    defaultValue: defaultValue.instructor,
   },
 ];

@@ -40,6 +40,7 @@ storiesOf(categoryName, module).add('CreateCourseForm', () => {
       state,
       i18n,
       classes,
+      defaultValue: {},
     }),
     title: 'Formulario para crear un curso',
     i18n: {
