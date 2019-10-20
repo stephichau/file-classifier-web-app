@@ -10,7 +10,7 @@ export default ({
   {
     component: components.TEXT_INPUT,
     id: 'course',
-    label: i18n.sheetMaker.course,
+    label: i18n.createCourse.course,
     value: state.course || '',
     classes,
     onChange: (e) => onChange({
@@ -22,7 +22,7 @@ export default ({
   {
     component: components.TEXT_INPUT,
     id: 'year',
-    label: i18n.sheetMaker.year,
+    label: i18n.createCourse.year,
     value: state.year || '',
     classes,
     onChange: (e) => onChange({
@@ -34,7 +34,7 @@ export default ({
   {
     component: components.NUMBER_INPUT,
     id: 'section',
-    label: i18n.sheetMaker.section,
+    label: i18n.createCourse.section,
     value: state.section || 1,
     classes,
     onChange: (e) => onChange({
@@ -47,7 +47,7 @@ export default ({
   {
     component: components.SIMPLE_SELECT,
     id: 'semester',
-    label: i18n.sheetMaker.semester,
+    label: i18n.createCourse.semester,
     value: state.semester || '',
     classes,
     onChange: (e) => onChange({
@@ -69,7 +69,7 @@ export default ({
   {
     component: components.TEXT_INPUT,
     id: 'instructor',
-    label: i18n.sheetMaker.instructor,
+    label: i18n.createCourse.instructor,
     value: state.instructor || '',
     classes,
     onChange: (e) => onChange({

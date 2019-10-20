@@ -16,7 +16,9 @@ import {
 
 import actions from '../../../store/actions';
 
-const { answerSheet: { POST_ANSWER_SHEET_REQUEST } } = actions;
+const {
+  answerSheet: { POST_ANSWER_SHEET_REQUEST },
+} = actions;
 
 const mapStateToProps = ({ user, generic }) => ({
   user,

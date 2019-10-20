@@ -26,12 +26,13 @@ storiesOf(categoryName, module).add('CreateCourseForm', () => {
     },
   })
   const i18n = {
-    sheetMaker: {
-      course: 'Sigla del Curso',
+    createCourse: {
+      title: 'Formulario para crear un curso',
+      course: 'Curso',
       year: 'Año',
-      semester: 'Semestre',
       section: 'Sección',
-      instructor: 'Apellido del Instructor',
+      semester: 'Semestre',
+      instructor: 'Apellido del profesor',
     },
   };
   const defaultProps = {

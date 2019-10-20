@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import isEqual from 'loadsh/isEqual';
 import GenericModal from '../GenericModal';
 import CreateCourseForm from '../../Forms/CreateCourseForm';
 import mockConfig from '../../Forms/CreateCourseForm/config';
@@ -29,6 +30,16 @@ const CreateCourseModal = ({
     i18n,
     defaultValue,
   });
+
+  const invalidState = Object.keys(state).map(key => {
+    if (typeof state[key] === 'string') return state[key].length <= 1;
+    return state[key] === null;
+  }).filter(key => key).length === 0;
+
+  const unTouched = isEqual(state, defaultValue);
+
+  const unMetRequirements = unTouched || !invalidState;
+
   return (
     <GenericModal>
       <CreateCourseForm
@@ -37,6 +48,7 @@ const CreateCourseModal = ({
         classes={classes}
         config={config}
         state={state}
+        unMetRequirements={unMetRequirements}
         {...restOfProps}
       />
     </GenericModal>

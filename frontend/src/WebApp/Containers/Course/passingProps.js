@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import get from 'loadsh/get';
 import { LoadingToast } from '../../../WebUI/Toast';
