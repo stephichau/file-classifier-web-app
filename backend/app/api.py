@@ -1,4 +1,5 @@
 import os
+import uuid
 from mongoengine import *
 from .db import get_collection, create_fs_cursor
 from sheet_maker import main as make
@@ -15,6 +16,7 @@ class Course(Document):
 class Answer(Document):
   # delete all answer sheets when deleting the course
   course = ReferenceField(Course, reverse_delete_rule=CASCADE)
+  uuid = UUIDField(binary=False, default=uuid.uuid4)
   upper_bound = IntField(min_value = 1, required = True)
   lower_bound = IntField(min_value = 0, required=True)
   evaluation = StringField(max_length=100, required=True)
@@ -60,36 +62,31 @@ def get_answer_doc(data: dict):
 def create_answer_doc(data: dict):
   _course = get_course_doc(data)
   _template = None
-  print(_course)
   if _course:
-    print(stri(data['lower_bound']))
     _answer = Answer()
     _answer.course = _course,
-    _answer.lower_bound = int(data['lower_bound']),
-    _answer.upper_bound = int(data['upper_bound']),
+    _answer.lower_bound = data['lower_bound'],
+    _answer.upper_bound = data['upper_bound'],
     _answer.evaluation = str(data['evaluation']).lower()
 
-    print(_answer)
-    _answer_sheet = create_answer_sheet(data)
-    print(_answer_sheet)
-
-    _answer.answer_file.put(_answer_sheet) 
-    _answer.template.put(_answer_sheet)
+    print(_answer.uuid)
+    _answer_sheet_path, _status = create_answer_sheet(data)
+    if _status:
+      _answer_file = open(_answer_sheet_path, 'rb')
+      print(_answer_file)
+      _answer.answer_file.put(_answer_file) 
+      _answer.template.put(_answer_file)
 
     if _answer.save():
       return _answer
     return False
-    # return _answer if _answer.save() else False
 
-def create_answer_sheet(_data: dict) -> bool:
-  sheet = _data
-  if make.main(_data):
-    COURSE_NAME = _data['course']
-    EVALUATION = _data['evaluation']
+def create_answer_sheet(data: dict):
+  sheet = data
+  if make.main(data):
+    COURSE_NAME = data['course']
+    EVALUATION = data['evaluation']
     ANSWER_SHEETS_DIR_PATH = f'{os.getcwd()}/ANSWER_SHEETS/{COURSE_NAME}_{EVALUATION}/compilation.pdf'
+    return ANSWER_SHEETS_DIR_PATH, True
 
-    # stores file in mongodb
-    return open(ANSWER_SHEETS_DIR_PATH, 'rb')
-      # file_id=fs.put(pdf)
-      # sheet['file_id'] = file_id
-      # ans_sheets.insert_one(sheet)
+  return '', False
