@@ -8,6 +8,7 @@ connect(os.getenv('MONGODB'))
 
 class Course(Document):
   name = StringField(max_length=200, required=True)
+  uuid = UUIDField(binary=False, default=uuid.uuid4)
   semester = IntField(min_value = 0, max_value = 2, required=True)
   year = StringField(max_length=5, required=True)
   instructor = StringField(max_length=200, required=True)
@@ -39,22 +40,25 @@ def create_course_doc(data: dict) -> bool:
   return _course if _course.save() else False
 
 def get_course_doc(data: dict):
-  _course = Course.objects(
-    name = str(data['course']).lower(),
-    semester = int(data['semester']),
-    year = str(data['year']).lower(),
-    instructor = str(data['instructor']).lower(),
-    section = int(data['section'])
-  )
+  if 'uuid' in data:
+    _course = Course.objects(uuid = data['uuid'])
+  else:
+    _course = Course.objects(
+      name = str(data['course']).lower(),
+      semester = int(data['semester']),
+      year = str(data['year']).lower(),
+      instructor = str(data['instructor']).lower(),
+      section = int(data['section'])
+    )
   return _course if _course else False
 
 def delete_course_doc(data: dict):
-  _course = get_course_doc(data)
-  _temp = _course
-  if _course:
-    _course.delete()
-    return _temp
-  return False
+  if 'uuid' in data:
+    _course = Course.objects(uuid = data['uuid'])
+    if _course:
+      _course.delete()
+      return data 
+  return '{}'
 
 def get_answer_doc(data: dict):
   pass
@@ -88,5 +92,4 @@ def create_answer_sheet(data: dict):
     EVALUATION = data['evaluation']
     ANSWER_SHEETS_DIR_PATH = f'{os.getcwd()}/ANSWER_SHEETS/{COURSE_NAME}_{EVALUATION}/compilation.pdf'
     return ANSWER_SHEETS_DIR_PATH, True
-
   return '', False
