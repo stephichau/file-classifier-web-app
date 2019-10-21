@@ -48,6 +48,7 @@ export default (props) => {
         submitCreateCourseModal(props);
         setToastId(toastId);
       },
+      action: POST_COURSE,
     });
   };
 

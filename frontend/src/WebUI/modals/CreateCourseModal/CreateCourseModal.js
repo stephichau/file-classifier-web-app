@@ -10,10 +10,12 @@ const CreateCourseModal = ({
   classes,
   title,
   i18n,
+  defaultState,
   ...restOfProps
 }) => {
+  const defState = defaultState || defaultValue;
 
-  const [state, setState] = useState({ ...defaultValue });
+  const [state, setState] = useState({ ...defState });
   const onChange = async ({
     name,
     value
@@ -61,12 +63,14 @@ CreateCourseModal.defaultProps = {
     sheetMaker: {},
     form: {}
   },
+  defaultState: null,
 };
 
 CreateCourseModal.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   i18n: PropTypes.object,
+  defaultState: PropTypes.object,
 };
 
 export default CreateCourseModal;

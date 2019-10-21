@@ -1,12 +1,9 @@
-import actions from '../../../store/actions';
 import get from 'loadsh/get';
 
 export default (props) => {
-  const {
-    courses: { POST_COURSE },
-  } = actions;
+  const action = get(props, 'action') || null;
   return {
     ...props,
-    isSubmitting: get(props, `${POST_COURSE}.loading`) || false,
+    isSubmitting: get(props, `${action}.loading`) || false,
   };
 }
