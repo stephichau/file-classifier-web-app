@@ -2,12 +2,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { toast } from 'react-toastify';
 import {
   SmallInfoCard,
   SkeletonSmallInfoCard,
-  Toast,
-  ToastWrapper,
 } from '../../../WebUI';
 
 
@@ -17,7 +14,27 @@ const Courses = ({
   loading,
   i18n,
   history,
+  onNewCourse,
+  createCourse,
+  loadToast,
+  hideModal,
+  toastId,
+  isSubmitting,
 }) => {
+  useEffect(() => {
+    if (createCourse) {
+      if (!createCourse.loading) hideModal();
+      if (createCourse.payload) loadToast(toastId, { type: 'success', closeButton: false, render: 'Creando curso...' })
+      if (createCourse.error) {
+        loadToast(toastId, {
+          type: 'error',
+          closeButton: false,
+          render: 'Hubo un error. Intente nuevamente'
+        });
+      }
+    }
+  }, [createCourse])
+
   const { location } = history;
 
   const onClick = (courseId) => {
@@ -42,7 +59,11 @@ const Courses = ({
           }
           {
             !loading && courses && courses.map((course, index) => (
-              <ButtonBase className={classes.card} onClick={() => onClick(course.title)}>
+              <ButtonBase
+                className={classes.card}
+                onClick={() => onClick(course.title)}
+                disabled={isSubmitting}
+              >
                 <SmallInfoCard {...course} key={`Info--${index}`}>
                   <div className={classes.rectangle} />
                 </SmallInfoCard>
@@ -51,7 +72,11 @@ const Courses = ({
           }
           {
             !loading && (
-              <ButtonBase className={classes.card}>
+              <ButtonBase
+                className={classes.card}
+                onClick={onNewCourse}
+                disabled={isSubmitting}
+              >
                 <SmallInfoCard
                   borderStyle="dotted"
                 >
@@ -79,6 +104,10 @@ Courses.defaultProps = {
     courses: 'Cursos',
     addCourse: '+ Agregar curso',
   },
+  onNewCourse: () => {},
+  loadToast: () => {},
+  hideModal: () => {},
+  toastId: null,
 };
 
 Courses.propTypes = {
@@ -90,6 +119,11 @@ Courses.propTypes = {
   loading: PropTypes.bool,
   i18n: PropTypes.object,
   history: PropTypes.object.isRequired,
+  onNewCourse: PropTypes.func,
+  loadToast: PropTypes.func,
+  hideModal: PropTypes.func,
+  toastId: PropTypes.string,
+  isSubmitting: PropTypes.bool.isRequired,
 };
 
 export default Courses;

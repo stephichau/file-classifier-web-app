@@ -1,10 +1,4 @@
-const components = {
-  CHECK_BOX: require('../../Inputs/CheckBox').default,
-  RADIO_BUTTON: require('../../Inputs/RadioButton').default,
-  SIMPLE_SELECT: require('../../Inputs/Selects/SimpleSelect').default,
-  TEXT_INPUT: require('../../Inputs/TextInput').default,
-  NUMBER_INPUT: require('../../Inputs/NumberInput').default,
-};
+import components from '../components';
 
 export default ({
   onChange,
@@ -136,6 +130,10 @@ export default ({
     {
       value: 'template_IIC2333',
       label: 'template_IIC2333',
+    },
+    {
+      value: 'template_IIC2523',
+      label: 'template_IIC2523',
     },
     {
       value: 'template_IIC1103',

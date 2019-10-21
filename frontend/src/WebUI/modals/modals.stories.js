@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Typography from '@material-ui/core/Typography';
 import GenericModal from './GenericModal';
 import SheetMakerModal from './SheetMakerModal';
+import CreateCourseModal from './CreateCourseModal';
 
 const categoryName = 'ElementalComponents/Modals';
 
@@ -46,5 +47,32 @@ storiesOf(categoryName, module)
   }
   return (
     <SheetMakerModal {...defaultProps} />
+  );
+});
+
+
+storiesOf(categoryName, module)
+  .add('CreateCourseModal', () => {
+  const defaultProps = {
+    onSubmit: () => {},
+    onCancel: () => {},
+    title: 'Formulario para crear un curso',
+    i18n: {
+      createCourse: {
+        title: 'Formulario para crear un curso',
+        course: 'Curso',
+        year: 'Año',
+        section: 'Sección',
+        semester: 'Semestre',
+        instructor: 'Apellido del profesor',
+      },
+      form: {
+        cancel: 'Cancelar',
+        submit: 'Crear',
+      }
+    },
+  }
+  return (
+    <CreateCourseModal {...defaultProps} />
   );
 });

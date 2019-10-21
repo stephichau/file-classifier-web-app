@@ -13,7 +13,6 @@ const NumberInput = ({
   defaultValue,
 }) => {
   useEffect(() => {
-    console.log(defaultValue);
     if (defaultValue) onChange({ target: { value: defaultValue } });
   }, []);
   return (
