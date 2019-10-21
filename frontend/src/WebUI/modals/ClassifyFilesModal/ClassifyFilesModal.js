@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import isUntouched from '../../utils/untouched';
 import validateState from '../../utils/validateState';
 import GenericModal from '../GenericModal';
-import CreateCourseForm from '../../Forms/CreateCourseForm';
-import mockConfig from '../../Forms/CreateCourseForm/config';
+import ClassifyFilesForm from '../../Forms/ClassifyFilesForm';
+import mockConfig from '../../Forms/ClassifyFilesForm/config';
 import defaultValue from './defaultValue';
 
-const CreateCourseModal = ({
+const ClassifyFilesModal = ({
   classes,
   title,
   i18n,
@@ -42,7 +42,7 @@ const CreateCourseModal = ({
 
   return (
     <GenericModal>
-      <CreateCourseForm
+      <ClassifyFilesForm
         title={title}
         i18n={i18n.form}
         classes={classes}
@@ -55,21 +55,20 @@ const CreateCourseModal = ({
   );
 };
 
-CreateCourseModal.defaultProps = {
+ClassifyFilesModal.defaultProps = {
   title: '',
   i18n: {
-    createCourse: {},
+    classifyFiles: {},
     form: {}
   },
   defaultState: null,
 };
 
-CreateCourseModal.propTypes = {
+ClassifyFilesModal.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string,
   i18n: PropTypes.object,
   defaultState: PropTypes.object,
 };
 
-export default CreateCourseModal;
-
+export default ClassifyFilesModal;
