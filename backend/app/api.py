@@ -41,7 +41,7 @@ def create_course_doc(data: dict) -> bool:
 
 def get_course_doc(data: dict):
   if 'uuid' in data:
-    _course = Course.objects(uuid = data['uuid'])
+    _course = Course.objects(uuid = data['uuid']).first()
   else:
     _course = Course.objects(
       name = str(data['course']).lower(),
@@ -49,22 +49,25 @@ def get_course_doc(data: dict):
       year = str(data['year']).lower(),
       instructor = str(data['instructor']).lower(),
       section = int(data['section'])
-    )
+    ).first()
   return _course if _course else False
 
 def delete_course_doc(data: dict):
   if 'uuid' in data:
-    _course = Course.objects(uuid = data['uuid'])
+    _course = Course.objects(uuid = data['uuid']).first()
     if _course:
       _course.delete()
       return data 
   return {} 
 
 def get_answer_doc(data: dict):
-  pass
+  if 'uuid' in data:
+    _answer = Answer.objects(uuid=data['uuid']).first()
+    return _answer
+  return {}
 
 def create_answer_doc(data: dict):
-  _course = get_course_doc(data).first()
+  _course = get_course_doc(data)
   if _course:
     _answer = Answer()
     _answer.course = _course
@@ -82,8 +85,8 @@ def create_answer_doc(data: dict):
       print('Se salvo!')
       print(_answer.to_json())
       return _answer
-  # return {}
-
+  return {}
+  
 def create_answer_sheet(data: dict):
   sheet = data
   if make.main(data):
