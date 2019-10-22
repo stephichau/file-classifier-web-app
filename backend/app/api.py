@@ -82,11 +82,17 @@ def create_answer_doc(data: dict):
       _answer.template.put(_answer_file)
 
     if _answer.save():
-      print('Se salvo!')
-      print(_answer.to_json())
       return _answer
   return {}
-  
+
+def delete_answer_doc(data: dict):
+  if 'uuid' in data:
+    _answer = Answer.objects(uuid=data['uuid']).first()
+    if _answer:
+      _answer.delete()
+      return _answer
+    return {}
+
 def create_answer_sheet(data: dict):
   sheet = data
   if make.main(data):

@@ -3,7 +3,7 @@ from flask import render_template, jsonify, request
 from .api import ( 
                    
                   create_course_doc, get_course_doc, delete_course_doc,
-                  create_answer_doc, get_answer_doc,
+                  create_answer_doc, get_answer_doc, delete_answer_doc,
                   doc_to_json
 )
 
@@ -56,19 +56,16 @@ def create_answer():
     return response, 200
   return response, 500
 
-@app
-# @app.route('/answer/create', methods=['POST'])
-# def create_answer():
-#   # Call to sheet maker in order to create pdf
-#   _data = request.json 
-#   _created = create_answer_sheet(_data)
-#   response = {'success': _created}
-#   if _created:
-#     return response, 200 
-#   else:
-#     return response, 500 
+@app.route('/course/answer', methods=['DELETE'])
+def delete_answer():
+  _data = request.json
+  _answer = doc_to_json(delete_answer_doc(_data))
+  response = {'answer': _answer}
+  if _answer:
+    return response, 200
+  return response, 500
 
-@app.route('/answer/download/<int:answer_id>')
+@app.route('/course/answer/')
 def download_answer(answer_id):
   pass
 
