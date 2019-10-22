@@ -58,32 +58,31 @@ def delete_course_doc(data: dict):
     if _course:
       _course.delete()
       return data 
-  return '{}'
+  return {} 
 
 def get_answer_doc(data: dict):
   pass
 
 def create_answer_doc(data: dict):
-  _course = get_course_doc(data)
-  _template = None
+  _course = get_course_doc(data).first()
   if _course:
     _answer = Answer()
-    _answer.course = _course,
-    _answer.lower_bound = data['lower_bound'],
-    _answer.upper_bound = data['upper_bound'],
+    _answer.course = _course
+    _answer.lower_bound = int(data['lower_bound'])
+    _answer.upper_bound = int(data['upper_bound'])
     _answer.evaluation = str(data['evaluation']).lower()
 
-    print(_answer.uuid)
     _answer_sheet_path, _status = create_answer_sheet(data)
     if _status:
       _answer_file = open(_answer_sheet_path, 'rb')
-      print(_answer_file)
       _answer.answer_file.put(_answer_file) 
       _answer.template.put(_answer_file)
 
     if _answer.save():
+      print('Se salvo!')
+      print(_answer.to_json())
       return _answer
-    return False
+  # return {}
 
 def create_answer_sheet(data: dict):
   sheet = data

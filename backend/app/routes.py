@@ -50,18 +50,11 @@ def get_answer():
 @app.route('/course/answer', methods=['POST'])
 def create_answer():
   _data = request.json
-  # _answer = doc_to_json(create_answer_doc(_data))
-  _answer = create_answer_doc(_data)
-  # response = {'answer': _answer}
-  _answer = True
-  response = {'answer': 'fture'}
+  _answer = doc_to_json(create_answer_doc(_data))
+  response = {'answer': _answer}
   if _answer:
     return response, 200
   return response, 500
-
-# @app.route('/answers/<int:answer_id>', methods=['GET'])
-# def get_answer(answer_id):
-#   pass
 
 # @app.route('/answer/create', methods=['POST'])
 # def create_answer():
