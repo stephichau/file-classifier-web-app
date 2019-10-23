@@ -1,9 +1,11 @@
+import io
 from app import app
-from flask import render_template, jsonify, request
+from flask import render_template, jsonify, request, send_file
 from .api import ( 
                    
                   create_course_doc, get_course_doc, delete_course_doc,
                   create_answer_doc, get_answer_doc, delete_answer_doc,
+                  download_answer_sheet,
                   doc_to_json
 )
 
@@ -65,10 +67,15 @@ def delete_answer():
     return response, 200
   return response, 500
 
-@app.route('/course/answer/')
-def download_answer(answer_id):
-  pass
-
+@app.route('/course/answer/download')
+def download_answer():
+  _data = request.json
+  _answer_sheet = download_answer_sheet(_data)
+  if _answer_sheet:
+    app.logger.debug('Enviando answer sheet')
+    return send_file(io.BytesIO(_answer_sheet), 
+                     attachment_filename='answer_sheet.pdf',
+                     mimetype='application/pdf') 
 
 
 

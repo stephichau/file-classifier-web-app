@@ -93,11 +93,20 @@ def delete_answer_doc(data: dict):
       return _answer
     return {}
 
+def download_answer_sheet(data: dict):
+  if 'uuid' in data:
+    _answer = Answer.objects(uuid=data['uuid']).first()
+    if _answer:
+      _file = _answer.answer_file.read()
+      return _file
+  return {}
+
 def create_answer_sheet(data: dict):
-  sheet = data
   if make.main(data):
     COURSE_NAME = data['course']
     EVALUATION = data['evaluation']
     ANSWER_SHEETS_DIR_PATH = f'{os.getcwd()}/ANSWER_SHEETS/{COURSE_NAME}_{EVALUATION}/compilation.pdf'
     return ANSWER_SHEETS_DIR_PATH, True
   return '', False
+
+
