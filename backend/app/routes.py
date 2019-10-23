@@ -72,7 +72,6 @@ def download_answer():
   _data = request.json
   _answer_sheet = download_answer_sheet(_data)
   if _answer_sheet:
-    app.logger.debug('Enviando answer sheet')
     return send_file(io.BytesIO(_answer_sheet), 
                      attachment_filename='answer_sheet.pdf',
                      mimetype='application/pdf') 
