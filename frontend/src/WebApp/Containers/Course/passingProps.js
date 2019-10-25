@@ -9,7 +9,6 @@ export default ({
   history,
   showAnswerSheetModal,
   submitAnswerSheet,
-  hideModal,
   generic,
   ...restOfProps
 }) => {
@@ -17,6 +16,9 @@ export default ({
   const {
     answerSheet: {
       POST_ANSWER_SHEET,
+    },
+    classifier: {
+      POST_CLASSIFIER_FORM,
     },
   } = actions;
 
@@ -38,6 +40,14 @@ export default ({
       template: 'Nombre del archivo de template',
       copies: 'Copias por alumno',
     },
+    classifyFiles: {
+      title: 'Formulario para clasificar una evaluación',
+      course: 'Curso',
+      year: 'Año',
+      section: 'Sección',
+      semester: 'Semestre',
+      sheetId: 'Google Sheet ID',
+    },
     form: {
       cancel: 'Cancelar',
       submit: 'Crear',
@@ -49,11 +59,19 @@ export default ({
     return toast(<LoadingToast content="En Proceso" />, { closeButton: false });
   };
 
-  if (generic[[POST_ANSWER_SHEET]]) {
-    if (!generic[POST_ANSWER_SHEET].loading) hideModal();
-    if (generic[POST_ANSWER_SHEET].payload) loadToast(toastId, { type: 'success', closeButton: false, render: 'Creando hojas...' })
-    if (generic[POST_ANSWER_SHEET].error) loadToast(toastId, { type: 'error', closeButton: false, render: 'Hubo un error. Intente nuevamente' })
-  }
+  const fileOptions = [{
+      label: 'SCANS/IIC2333/p1-mt-2019-2',
+      value: 'SCANS/IIC2333/p1-mt-2019-2',
+    },
+    {
+      label: 'SCANS/IIC2333/p2-mt-2019-2',
+      value: 'SCANS/IIC2333/p2-mt-2019-2',
+    },
+    {
+      label: 'SCANS/IIC2333/p3-mt-2019-2',
+      value: 'SCANS/IIC2333/p3-mt-2019-2',
+    },
+  ];
 
   const options = config({
     sheetMakerProps,
@@ -61,6 +79,8 @@ export default ({
     loadToast,
     submitAnswerSheet,
     toastLoaded: setToastId,
+    options: fileOptions,
+    ...restOfProps
   });
 
 
@@ -72,5 +92,19 @@ export default ({
     courseName,
     options,
     isLoading,
+    answerSheet: generic[POST_ANSWER_SHEET] && {
+      ...generic[POST_ANSWER_SHEET],
+      success: 'Creando hojas...',
+      error: 'Hubo un error. Intente nuevamente',
+    },
+    classifierForm: generic[POST_CLASSIFIER_FORM] && {
+      ...generic[POST_CLASSIFIER_FORM],
+      success: 'Clasificando hojas...',
+      error: 'Hubo un error. Intente nuevamente',
+    },
+    toast: {
+      loadToast,
+      toastId,
+    },
   };
 }

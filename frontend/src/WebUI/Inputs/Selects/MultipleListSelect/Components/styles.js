@@ -1,6 +1,6 @@
 export default theme => ({
   textField: {
-    width: '30%',
+    width: '40%',
     maxWidth: 130,
     '& label': {
       fontSize: 14,
