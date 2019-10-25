@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  storiesOf
+  storiesOf,
 } from '@storybook/react';
 import {
-  createStyles
+  createStyles,
 } from '@material-ui/core';
 
 import TextInput from './TextInput';
@@ -11,6 +11,7 @@ import RadioButtonInput from './RadioButton';
 import CheckBoxInput from './CheckBox';
 import {
   SimpleSelectInput,
+  MultipleListSelect,
 } from './Selects';
 import NumberInput from './NumberInput';
 
@@ -61,6 +62,37 @@ storiesOf(categoryName, module).add('Inputs', () => {
     onChange: () => {},
     value: 10,
   };
+
+  const [list, setList] = useState([]);
+  const onNewInput = (obj) => {
+    const newList = [...list, { ...obj }];
+    setList(newList);
+  };
+
+  const multipleSimpleSelectProps = {
+    classes: createStyles({}),
+    title: 'MultipleSimpleSelect',
+    textFieldLabel: 'Pregunta',
+    selectLabel: 'Escoge un archivo',
+    textInputPlaceholder: 'Ej: P1, P2',
+    options: [
+      {
+        label: 'SCANS/IIC2333/p1-mt-2019-2',
+        value: 'SCANS/IIC2333/p1-mt-2019-2',
+      },
+      {
+        label: 'SCANS/IIC2333/p2-mt-2019-2',
+        value: 'SCANS/IIC2333/p2-mt-2019-2',
+      },
+      {
+        label: 'SCANS/IIC2333/p3-mt-2019-2',
+        value: 'SCANS/IIC2333/p3-mt-2019-2',
+      },
+    ],
+    list,
+    onNewInput,
+  };
+
   return (
     <div style={{
       display: 'flex',
@@ -73,6 +105,7 @@ storiesOf(categoryName, module).add('Inputs', () => {
       <CheckBoxInput {...checkBoxDefaultProps} />
       <SimpleSelectInput {...simpleSelectInputDefaultProps} />
       <NumberInput {...numberInputDefaultProps} />
+      <MultipleListSelect {...multipleSimpleSelectProps} />
     </div>
   )
 });
