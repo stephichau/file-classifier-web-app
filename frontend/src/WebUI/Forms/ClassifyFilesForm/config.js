@@ -1,3 +1,5 @@
+import isEqual from 'loadsh/isEqual';
+import indexOf from 'lodash/indexOf';
 import components from '../components';
 
 export default ({
@@ -6,6 +8,8 @@ export default ({
   state,
   classes,
   defaultValue,
+  setState,
+  ...restOfFilesProps
 }) => [
   {
     component: components.TEXT_INPUT,
@@ -77,5 +81,35 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: defaultValue.sheetId,
+  },
+  {
+    component: components.MULTIPLE_SELECT,
+    id: 'files',
+    title: null,
+    list: state.files || [],
+    defaultValue: defaultValue.files,
+    textFieldLabel: 'Pregunta',
+    selectLabel: 'Escoge un archivo',
+    textInputPlaceholder: 'Ej: P1, P2',
+    onNewInput: (obj) => {
+      const newList = [...state.files, {
+        ...obj
+      }];
+      setState({
+        ...state,
+        files: [...newList],
+      });
+    },
+    onDeleteInput: ({ data, index }) => {
+      const toDelete = isEqual(state.files[index], data) ?
+        index: indexOf(state.files, data);
+      const oldList = [...state.files];
+      oldList.splice(toDelete, 1);
+      setState({
+        ...state,
+        files: [...oldList],
+      });
+    },
+    ...restOfFilesProps,
   },
 ];
