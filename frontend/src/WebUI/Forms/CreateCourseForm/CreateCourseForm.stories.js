@@ -9,7 +9,9 @@ import { createStyles } from '@material-ui/core';
 const categoryName = 'AssembledComponents/Forms';
 
 storiesOf(categoryName, module).add('CreateCourseForm', () => {
-  const [state, setState] = useState({});
+  const [state, setState] = useState({
+    files: [],
+  });
   const onChange = ({
     name,
     value
@@ -33,8 +35,10 @@ storiesOf(categoryName, module).add('CreateCourseForm', () => {
       section: 'Sección',
       semester: 'Semestre',
       instructor: 'Apellido del profesor',
+      files: 'Preguntas',
     },
   };
+ 
   const defaultProps = {
     config: config({
       onChange,
@@ -42,6 +46,7 @@ storiesOf(categoryName, module).add('CreateCourseForm', () => {
       i18n,
       classes,
       defaultValue: {},
+      setState,
     }),
     title: 'Formulario para crear un curso',
     i18n: {

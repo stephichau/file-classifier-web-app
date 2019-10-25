@@ -1,6 +1,7 @@
 export default theme => ({
   textField: {
-    width: 100,
+    width: '30%',
+    maxWidth: 130,
     '& label': {
       fontSize: 14,
     },
@@ -18,7 +19,7 @@ export default theme => ({
   formControl: {
     margin: 0,
     width: '100%',
-    width: 250,
+    marginLeft: 20,
     '& label': {
       fontSize: 14,
     },

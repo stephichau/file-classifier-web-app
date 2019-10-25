@@ -12,7 +12,6 @@ import InputSelect from './Components';
 
 const MultipleListSelect = ({
   classes,
-  onChange,
   onNewInput,
   list,
   key,

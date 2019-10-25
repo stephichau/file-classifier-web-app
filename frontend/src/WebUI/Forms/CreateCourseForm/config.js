@@ -1,3 +1,5 @@
+import isEqual from 'loadsh/isEqual';
+import indexOf from 'lodash/indexOf';
 import components from '../components';
 
 export default ({
@@ -6,6 +8,7 @@ export default ({
   state,
   classes,
   defaultValue,
+  setState,
 }) => [
   {
     component: components.TEXT_INPUT,
@@ -77,5 +80,48 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: defaultValue.instructor,
+  },
+  {
+    component: components.MULTIPLE_SELECT,
+    id: 'files',
+    title: null,
+    list: state.files || [],
+    defaultValue: defaultValue.files,
+    textFieldLabel: 'Pregunta',
+    selectLabel: 'Escoge un archivo',
+    textInputPlaceholder: 'Ej: P1, P2',
+    options: [
+      {
+        label: 'SCANS/IIC2333/p1-mt-2019-2',
+        value: 'SCANS/IIC2333/p1-mt-2019-2',
+      },
+      {
+        label: 'SCANS/IIC2333/p2-mt-2019-2',
+        value: 'SCANS/IIC2333/p2-mt-2019-2',
+      },
+      {
+        label: 'SCANS/IIC2333/p3-mt-2019-2',
+        value: 'SCANS/IIC2333/p3-mt-2019-2',
+      },
+    ],
+    onNewInput: (obj) => {
+      const newList = [...state.files, {
+        ...obj
+      }];
+      setState({
+        ...state,
+        files: [...newList],
+      });
+    },
+    onDeleteInput: ({ data, index }) => {
+      const toDelete = isEqual(state.files[index], data) ?
+        index: indexOf(state.files, data);
+      const oldList = [...state.files];
+      oldList.splice(toDelete, 1);
+      setState({
+        ...state,
+        files: [...oldList],
+      });
+    },
   },
 ];
