@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import get from 'loadsh/get';
-import omit from 'loadsh/omit';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
+import DeleteIcon from '@material-ui/icons/Delete';
 import InputSelect from './Components';
 
 const MultipleListSelect = ({
@@ -15,9 +17,9 @@ const MultipleListSelect = ({
   list,
   key,
   title,
+  onDeleteInput,
   ...restOfProps
 }) => {
-  const [state, setState] = useState({});
   const [currentKey, setCurrentKey] = useState('');
   const [disableSelect, setDisableSelect] = useState(true);
 
@@ -36,18 +38,10 @@ const MultipleListSelect = ({
     const filename = get(e, 'filename') || null;
     if (key) {
       if (key.length !== 0) {
-        setState({
-          ...state,
-          [key]: '',
-        });
         setCurrentKey(key);
         if (key.length >= 2) setDisableSelect(false);
         if (key.length < 2) setDisableSelect(true);
       } else {
-        const newState = omit(state, currentKey);
-        setState({
-          ...newState,
-        });
         resetCurrentKey();
       }
     } else if (filename) {
@@ -57,6 +51,10 @@ const MultipleListSelect = ({
       });
       resetCurrentKey();
     }
+  };
+
+  const handleDeleteInput = ({ data, index }) => {
+    onDeleteInput({ data, index });
   };
 
   return (
@@ -70,22 +68,36 @@ const MultipleListSelect = ({
         </Typography>
       </div>)}
       <InputSelect
-        textValue={state[currentKey]}
         onChange={handleOnChange}
         onBlur={handleOnBlur}
         textValue={currentKey}
         disableSelect={disableSelect}
         {...restOfProps}
       />
-      <div className={classes.listContainer}>
-        {
-          list.map((data, index) => (
-            <div key={`div---${index}`}>
-              {`${data.key} ${data.value}`}
-            </div>
-          ))
-        }
-      </div>
+      {
+      list.length > 0 && (
+        <>
+        <Divider className={classes.divider} />
+        <List dense className={classes.listContainer}>
+          {
+            list.map((data, index) => (
+              <ListItem key={`div---${index}`} className={classes.listItem}>
+                <Typography>
+                  {`${index + 1}. ${data.key}: ${data.value}`}
+                </Typography>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => handleDeleteInput({ data, index })}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </ListItem>
+            ))
+          }
+        </List>
+        </>
+      )}
     </Paper>
   )
 };
@@ -94,6 +106,7 @@ MultipleListSelect.defaultProps = {
   classes: null,
   list: [],
   onNewInput: () => {},
+  onDeleteInput: () => {},
   title: null,
 };
 
@@ -101,6 +114,7 @@ MultipleListSelect.propTypes = {
   classes: PropTypes.object,
   list: PropTypes.arrayOf(PropTypes.object),
   onNewInput: PropTypes.func,
+  onDeleteInput: PropTypes.func,
   title: PropTypes.string,
 };
 

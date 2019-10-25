@@ -12,4 +12,15 @@ export default theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  listContainer: {
+    padding: '0 !important',
+  },
+  listItem: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-between',
+  },
+  divider: {
+    margin: '10px 0',
+  },
 });

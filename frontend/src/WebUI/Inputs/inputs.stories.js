@@ -5,6 +5,8 @@ import {
 import {
   createStyles,
 } from '@material-ui/core';
+import isEqual from 'loadsh/isEqual';
+import indexOf from 'lodash/indexOf';
 
 import TextInput from './TextInput';
 import RadioButtonInput from './RadioButton';
@@ -34,6 +36,7 @@ storiesOf(categoryName, module).add('Inputs', () => {
   const radioButtonDefaultProps = {
     id: 'radio-button',
     label: 'RadioButton',
+    value: '',
     classes: createStyles({}),
     onChange: () => {},
     selected: true,
@@ -60,13 +63,22 @@ storiesOf(categoryName, module).add('Inputs', () => {
     label: 'NumberInput',
     classes: createStyles({}),
     onChange: () => {},
-    value: 10,
+    value: '10',
   };
 
   const [list, setList] = useState([]);
+
   const onNewInput = (obj) => {
     const newList = [...list, { ...obj }];
     setList(newList);
+  };
+
+  const onDeleteInput = ({ data, index }) => {
+    const toDelete = isEqual(list[index], data) ?
+      index : indexOf(list, data);
+    const oldList = [...list];
+    oldList.splice(toDelete, 1);
+    setList([...oldList]);
   };
 
   const multipleSimpleSelectProps = {
@@ -91,6 +103,7 @@ storiesOf(categoryName, module).add('Inputs', () => {
     ],
     list,
     onNewInput,
+    onDeleteInput,
   };
 
   return (
