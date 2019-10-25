@@ -12,9 +12,12 @@ const SimpleSelectInput = ({
   label,
   value,
   onChange,
+  onBlur,
   isNative,
   options,
   defaultValue,
+  disabled,
+  isRequired,
 }) => {
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
@@ -24,9 +27,11 @@ const SimpleSelectInput = ({
   }, []);
   return (
     <FormControl
+      required={isRequired}
       variant="outlined"
       className={classes.formControl}
       margin="normal"
+      disabled={disabled}
     >
       <InputLabel ref={inputLabel} htmlFor={id}>
         {label}
@@ -35,6 +40,7 @@ const SimpleSelectInput = ({
         native={isNative}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         labelWidth={labelWidth}
         inputProps={{
           name: label,
@@ -56,6 +62,10 @@ SimpleSelectInput.defaultProps = {
   options: [],
   value: '',
   defaultValue: undefined,
+  disabled: false,
+  isRequired: false,
+  onChange: () => {},
+  onBlur: () => {},
 };
 
 SimpleSelectInput.propTypes = {
@@ -63,13 +73,16 @@ SimpleSelectInput.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   isNative: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })),
   defaultValue: PropTypes.oneOf([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
+  disabled: PropTypes.bool,
+  isRequired: PropTypes.bool,
 };
 
 export default SimpleSelectInput;
