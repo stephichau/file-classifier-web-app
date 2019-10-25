@@ -32,6 +32,8 @@ const ClassifyFilesModal = ({
     state,
     i18n,
     defaultValue: defState,
+    setState,
+    ...restOfProps,
   });
 
   const invalidState = validateState(state);
