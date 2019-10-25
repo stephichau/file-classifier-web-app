@@ -6,6 +6,9 @@ export default ({
   loadToast,
   submitAnswerSheet,
   toastLoaded,
+  showClassifierFormModal,
+  submitClassifierForm,
+  options,
 }) => [
   {
     title: sheetMakerProps.sheetMaker.title,
@@ -21,7 +24,16 @@ export default ({
   },
   {
     title: 'Clasificar pruebas escaneadas',
-    onClick: () => {}
+    onClick: () => showClassifierFormModal({
+      title: sheetMakerProps.classifyFiles.title,
+      i18n: sheetMakerProps,
+      onSubmit: (props) => {
+        const toastId = loadToast();
+        submitClassifierForm(props);
+        toastLoaded(toastId);
+      },
+      options,
+    }),
   },
   {
     title: 'Ver pruebas clasificadas',

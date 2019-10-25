@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -12,7 +12,31 @@ const Course = ({
   options,
   courseName,
   isLoading,
+  answerSheet,
+  classifierForm,
+  toast: {
+    loadToast,
+    toastId,
+  },
+  hideModal,
 }) => {
+  useEffect(() => {
+    const current = answerSheet || classifierForm;
+    if (current) {
+      if (current.loading) hideModal();
+      if (current.payload) loadToast(toastId, {
+        type: 'success',
+        closeButton: false,
+        render: current.success,
+      })
+      if (current.error) loadToast(toastId, {
+        type: 'error',
+        closeButton: false,
+        render: current.error,
+      })
+    }
+
+  }, [answerSheet, classifierForm])
 
   return (
     <div className={classes.container}>
@@ -38,6 +62,10 @@ const Course = ({
 
 Course.defaultProps = {
   isLoading: false,
+  answerSheet: {},
+  classifierForm: {},
+  toast: {},
+  hideModal: () => {},
 };
 
 Course.propTypes = {
@@ -45,6 +73,10 @@ Course.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   courseName: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
+  answerSheet: PropTypes.object,
+  classifierForm: PropTypes.object,
+  toast: PropTypes.object,
+  hideModal: PropTypes.func,
 };
 
 export default Course;
