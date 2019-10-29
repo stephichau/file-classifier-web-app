@@ -1,32 +1,21 @@
 import os
 import uuid
 from mongoengine import *
-from .db import get_collection, create_fs_cursor
 from sheet_maker import main as make
+from .models import Course, Answer
 
 connect(os.getenv('MONGODB'))
 
-class Course(Document):
-  name = StringField(max_length=200, required=True)
-  uuid = UUIDField(binary=False, default=uuid.uuid4)
-  semester = IntField(min_value = 0, max_value = 2, required=True)
-  year = StringField(max_length=5, required=True)
-  instructor = StringField(max_length=200, required=True)
-  section = IntField(required=True)
-
-class Answer(Document):
-  # delete all answer sheets when deleting the course
-  course = ReferenceField(Course, reverse_delete_rule=CASCADE)
-  uuid = UUIDField(binary=False, default=uuid.uuid4)
-  upper_bound = IntField(min_value = 1, required = True)
-  lower_bound = IntField(min_value = 0, required=True)
-  evaluation = StringField(max_length=100, required=True)
-  template = FileField(required=True)
-  answer_file = FileField(required=True)
-
 def doc_to_json(doc):
+  # return doc.to_json()
   try:
     return doc.to_json()
+  except:
+    return {}
+
+def docs_to_json(docs):
+  try:
+    return [doc.to_json() for doc in docs]
   except:
     return {}
 
@@ -37,7 +26,16 @@ def create_course_doc(data: dict) -> bool:
   _course.year = str(data['year']).lower()
   _course.instructor = str(data['instructor']).lower()
   _course.section = int(data['section'])
-  return _course if _course.save() else False
+  return _course if _course.save() else {}
+
+
+def get_all_courses_doc(data: dict):
+  _courses = Course.objects
+  # for course in _courses:
+    # print(course.name)
+  # for course in _courses:
+  return [course for course in _courses] 
+
 
 def get_course_doc(data: dict):
   if 'uuid' in data:
@@ -50,7 +48,7 @@ def get_course_doc(data: dict):
       instructor = str(data['instructor']).lower(),
       section = int(data['section'])
     ).first()
-  return _course if _course else False
+  return _course if _course else {}
 
 def delete_course_doc(data: dict):
   if 'uuid' in data:
@@ -77,6 +75,7 @@ def create_answer_doc(data: dict):
 
     _answer_sheet_path, _status = create_answer_sheet(data)
     if _status:
+      "Saves file to database"
       _answer_file = open(_answer_sheet_path, 'rb')
       _answer.answer_file.put(_answer_file) 
       _answer.template.put(_answer_file)
@@ -108,5 +107,11 @@ def create_answer_sheet(data: dict):
     ANSWER_SHEETS_DIR_PATH = f'{os.getcwd()}/ANSWER_SHEETS/{COURSE_NAME}_{EVALUATION}/compilation.pdf'
     return ANSWER_SHEETS_DIR_PATH, True
   return '', False
+
+def classify_answer_sheet(data: dict):
+  "Classifies scanned sheets"
+  # if 'uuid' ink data:
+    # _answer = Answer.
+  pass
 
 

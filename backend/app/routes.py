@@ -6,12 +6,22 @@ from .api import (
                   create_course_doc, get_course_doc, delete_course_doc,
                   create_answer_doc, get_answer_doc, delete_answer_doc,
                   download_answer_sheet,
-                  doc_to_json
+                  get_all_courses_doc,
+                  doc_to_json, docs_to_json
 )
 
 @app.route('/', methods=['GET'])
 def index():
   return 'Hello World'
+
+@app.route('/courses', methods=['GET'])
+def get_all_courses():
+  _data = request.json
+  _courses = docs_to_json(get_all_courses_doc(_data))
+  response = {'courses' : _courses}
+  if _courses:
+    return jsonify(_courses), 200
+  return jsonify(response), 500
 
 @app.route('/course', methods=['GET'])
 def get_course():
