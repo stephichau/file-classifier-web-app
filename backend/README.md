@@ -12,7 +12,7 @@ pip3 install -r requirements.txt
 ```
 
 * Instalar usando Virtualenv
-```
+```shell
 pip install virtualenv
 
 virtualenv -p python3.7 venv
@@ -27,17 +27,38 @@ deactivate
 
 ```
 
-## Uso
-1. Iniciar las bases de datos
+## Develop
 2. Iniciar la aplicación:
 ```shell
 python3 -m -p 5000 flask run
 ```
 
 ## Rutas
+### Courses
+- GET /courses
+- GET /course
+  - Params:
+  - Response example:
 
+- POST /course
+  - Params:
+  - Response example:
 
-### Cursos
+- DELETE /course/
+  - Params:
+  - Response example:
 
+### Answer
+- GET /course/answer
+  - Params:
+  - Response example:
+
+- POST /course/answer
+  - Params:
+  - Response: example:
+
+- DELETE /course/answer
+  - Params:
+  - Response: example
 
 ### Hojas de respuesta
