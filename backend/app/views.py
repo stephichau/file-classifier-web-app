@@ -3,6 +3,7 @@ from flask import jsonify, request
 from app import app
 from .models import Course, Answer
 from mongoengine import *
+import werkzeug
 import os
 import json
 
@@ -15,6 +16,10 @@ def dict_transformation(qset):
   # https://stackoverflow.com/questions/43629181/converting-mongoengine-objects-to-json#44332720
   return json.loads(qset.to_json())
 
+def abort_if_course_doesnt_exist(course):
+  if course is None:
+    abort(404, message="Course doesn't exists")
+
 class Courses(Resource):
   def __init__(self):
     self.parser = reqparse.RequestParser()
@@ -22,21 +27,17 @@ class Courses(Resource):
   def abort_if_course_cant_be_deleted(self):
     abort(400, message="Course couldn't be deleted")
     
-  def abort_if_course_doesnt_exist(self, course):
-    if course is None:
-      abort(404, message="Course doesn't exists")
-  
   def abort_if_course_cant_be_modified(self):
     abort(400, message="Course couldn't be modified" )
 
   def get(self, course_id):
     course = Course.objects(uuid=course_id).first()
-    self.abort_if_course_doesnt_exist(course)
+    abort_if_course_doesnt_exist(course)
     return jsonify({'course': dict_transformation(course)})
     
   def delete(self, course_id):
     course = Course.objects(uuid=course_id).first()
-    self.abort_if_course_doesnt_exist(course)
+    abort_if_course_doesnt_exist(course)
     if course:
       course.delete()
       return jsonify({'course': course_id})
@@ -91,6 +92,15 @@ class CoursesList(Resource):
     return self.abort_if_course_cant_be_created() 
 
 class Answers(Resource):
+  def __init__(self):
+    self.parser = reqparse.RequestParser(bundle_errors=True)
+    self.parser.add_argument('course_uuid', type=str, location='json', required=True)
+    self.parser.add_argument('upper_bound', type=int, location='json', required=True)
+    self.parser.add_argument('lower_bound', type=str, location='json', required=True)
+    self.parser.add_argument('evaluation', type=int, location='json', required=True)
+    self.parser.add_argument('section', type=str, location='json', required=True)
+    self.parser.add_argument('instructor', type=str, location='json', required=True)
+
   def get(self):
     return {'course': 'course_data'}
 
@@ -101,8 +111,41 @@ class Answers(Resource):
     pass 
 
 class AnswersList(Resource):
-  def get(self):
-    pass
+  def __init__(self):
+    self.parser = reqparse.RequestParser()
+
+  def get(self,course_id):
+    print(course_id)
+    course = Course.objects(uuid=course_id).first()
+    answers = Answer.objects(course=course).all()
+    abort_if_course_doesnt_exist(course)    
+    return jsonify({'answers': dict_transformation(answers)})
+
+  def post(self,course_id):
+    self.parser.add_argument('template', type=werkzeug.FileStorage, location='files', required=True)
+    self.parser.add_argument('upper_bound', type=str, location='form', required=True)    
+    self.parser.add_argument('lower_bound', type=int, location='form', required=True)
+    self.parser.add_argument('evaluation', type=str, location='form', required=True)
+    args = self.parser.parse_args()
+    app.logger.debug(args)
+    # Search for course
+    course = Course.objects(uuid=course_id).first()
+    abort_if_course_doesnt_exist(course)
+
+    # Create template file in filesystem
+    
+
+
+
+    answer = Answer(
+      course = course,
+      upper_bound = args['upper_bound'],
+      lower_bound = args['lower_bound'],
+      evaluation = args['evaluation'],
+      template = args['template']
+    )
+
+
 
 class Users(Resource):
   def get(self):
@@ -129,7 +172,8 @@ api.add_resource(Courses, '/courses/<string:course_id>')
 api.add_resource(CoursesList, '/courses')
 
 ## Answer resources
-api.add_resource(Answers, '/courses/<string:course_id>/answers/')
+api.add_resource(Answers, '/courses/<string:course_id>/answers/<string:answer_id>')
+api.add_resource(AnswersList, '/courses/<string:course_id>/answers')
 
 
 ##User resources
