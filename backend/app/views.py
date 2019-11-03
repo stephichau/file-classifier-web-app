@@ -2,8 +2,11 @@ from flask_restful import Resource, Api, abort, reqparse
 from flask import jsonify, request
 from app import app
 from .models import Course, Answer
+from mongoengine import *
+import os
 import json
 
+connect(os.getenv('MONGODB'))
 api = Api(app)
 
 
@@ -12,22 +15,10 @@ def dict_transformation(qset):
   # https://stackoverflow.com/questions/43629181/converting-mongoengine-objects-to-json#44332720
   return json.loads(qset.to_json())
   
-
-def course_validator(data):
-  fields = ['course', 'semester', 'year', 'instructor', 'section']
-  for field in fields:
-    if field not in data.keys():
-      return False
-  return True
-
-
-
 class Courses(Resource):
-
   def __init__(self):
-    self.parser =   reqparse.RequestParser()
+    self.parser = reqparse.RequestParser()
     
-
   def abort_if_course_doesnt_exist(self, course):
     if course is None:
       abort(404, message="Course doesn't exists")
@@ -37,19 +28,39 @@ class Courses(Resource):
     self.abort_if_course_doesnt_exist(course)
     response = {'course': dict_transformation(course)}
     return jsonify(response)
-
-  def post(self, course_id):
-    print(request.json)
-
-
+    
   def delete(self, course_id):
     pass 
 
-class AllCourses(Resource):
+class CoursesList(Resource):
+  def __init__(self):
+    self.parser = reqparse.RequestParser(bundle_errors=True)
+    self.parser.add_argument('course', type=str, location='json', required=True)
+    self.parser.add_argument('year', type=str, location='json', required=True)
+    self.parser.add_argument('semester', type=int, location='json', required=True)
+    self.parser.add_argument('section', type=str, location='json', required=True)
+    self.parser.add_argument('instructor', type=str, location='json', required=True)
+  
+  def abort_if_course_cant_be_created(self):
+    abort(400, message="Course couldn't be created")
+
   def get(self):
     courses = Course.objects()
     response = {'courses': dict_transformation(courses)}
     return response
+  
+  def post(self):
+    args = self.parser.parse_args()
+    course = Course(
+      name=args['course'],
+      year=args['year'],
+      semester=args['semester'],
+      section=args['section'],
+      instructor=args['instructor']
+    )
+    if course.save():
+      return {'course': dict_transformation(course)}
+    return self.abort_if_course_cant_be_created() 
 
 class Answers(Resource):
   def get(self):
@@ -58,13 +69,14 @@ class Answers(Resource):
   def put(self):
     pass
 
-  def post(self):
-    pass
-
   def delete(self):
     pass 
 
-class User(Resource):
+class AnswersList(Resource):
+  def get(self):
+    pass
+
+class Users(Resource):
   def get(self):
     pass
 
@@ -77,8 +89,21 @@ class User(Resource):
   def delete(self):
     pass 
 
+class UsersList(Resource):
+  def get(self):
+    pass
 
-api.add_resource(Courses, '/coursee/<string:course_id>')
-api.add_resource(AllCourses, '/coursess')
-# api.add_resource(Answers, '/coursess/string:id/answer/string:answer_id')
-api.add_resource(Answers, '/answers/')
+  def post(self):
+    pass
+
+## Course resources
+api.add_resource(Courses, '/courses/<string:course_id>')
+api.add_resource(CoursesList, '/courses')
+
+## Answer resources
+api.add_resource(Answers, '/courses/<string:course_id>/answers/')
+
+
+##User resources
+# api.add_resource(Users, '/users/<string:user_id>')
+# api.add_resources(UsersList, '')
