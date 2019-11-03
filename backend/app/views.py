@@ -25,6 +25,9 @@ class Courses(Resource):
   def abort_if_course_doesnt_exist(self, course):
     if course is None:
       abort(404, message="Course doesn't exists")
+  
+  def abort_if_course_cant_be_modified(self):
+    abort(400, message="Course couldn't be modified" )
 
   def get(self, course_id):
     course = Course.objects(uuid=course_id).first()
@@ -34,7 +37,8 @@ class Courses(Resource):
   def delete(self, course_id):
     course = Course.objects(uuid=course_id).first()
     self.abort_if_course_doesnt_exist(course)
-    if course.delete():
+    if course:
+      course.delete()
       return jsonify({'course': course_id})
     return self.abort_if_course_cant_be_deleted()
   
@@ -47,7 +51,14 @@ class Courses(Resource):
     args = self.parser.parse_args()
     course = Course.objects(uuid=course_id).first()
     self.abort_if_course_doesnt_exist(course) 
-    
+    course.name = args['course']
+    course.year = args['year']
+    course.semester = args['semester']
+    course.section = args['section']
+    course.instructor = args['instructor']
+    if course.save():
+      return jsonify({'course': dict_transformation(course)})
+    return self.abort_if_course_cant_be_modified()
 
 class CoursesList(Resource):
   def __init__(self):
