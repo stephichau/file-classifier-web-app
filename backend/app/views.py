@@ -1,15 +1,27 @@
 from flask_restful import Resource, Api, abort, reqparse
 from flask import jsonify, request
+from werkzeug.datastructures import FileStorage
 from app import app
 from .models import Course, Answer
+
 from mongoengine import *
-import werkzeug
+from sheet_maker import main as make_sheet
+
+from pathlib import Path
 import os
 import json
 
 connect(os.getenv('MONGODB'))
 api = Api(app)
 
+
+def make_answer_sheet(data: dict):
+  if make_sheet.main(data):
+    COURSE_NAME = data['course']
+    EVALUATION = data['evaluation']
+    ANSWER_SHEETS_DIR_PATH = f'{os.getcwd()}/ANSWER_SHEETS/{COURSE_NAME}_{EVALUATION}/compilation.pdf'
+    return ANSWER_SHEETS_DIR_PATH, True
+  return '', False
 
 def dict_transformation(qset):
   # Extracted from
@@ -133,10 +145,14 @@ class AnswersList(Resource):
     abort_if_course_doesnt_exist(course)
 
     # Create template file in filesystem
-    print(app.config['DATA_DIR'])
-    
 
+    template_dir = Path(app.config['DATA_DIR']) / course.year \
+                   / str(course.semester) / course.name / str(course.section) \
+                   / args['evaluation'] / 'templates'
 
+    app.logger.debug(template_dir)    
+    template = args['template']
+    template.save(str(template_dir / 'template.png'))
 
     answer = Answer(
       course = course,
@@ -145,6 +161,8 @@ class AnswersList(Resource):
       evaluation = args['evaluation'],
       template = args['template']
     )
+
+    if answer.save():
 
 
 
