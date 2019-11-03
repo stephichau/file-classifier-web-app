@@ -14,10 +14,13 @@ def dict_transformation(qset):
   # Extracted from
   # https://stackoverflow.com/questions/43629181/converting-mongoengine-objects-to-json#44332720
   return json.loads(qset.to_json())
-  
+
 class Courses(Resource):
   def __init__(self):
     self.parser = reqparse.RequestParser()
+  
+  def abort_if_course_cant_be_deleted(self):
+    abort(400, message="Course couldn't be deleted")
     
   def abort_if_course_doesnt_exist(self, course):
     if course is None:
@@ -26,11 +29,25 @@ class Courses(Resource):
   def get(self, course_id):
     course = Course.objects(uuid=course_id).first()
     self.abort_if_course_doesnt_exist(course)
-    response = {'course': dict_transformation(course)}
-    return jsonify(response)
+    return jsonify({'course': dict_transformation(course)})
     
   def delete(self, course_id):
-    pass 
+    course = Course.objects(uuid=course_id).first()
+    self.abort_if_course_doesnt_exist(course)
+    if course.delete():
+      return jsonify({'course': course_id})
+    return self.abort_if_course_cant_be_deleted()
+  
+  def put(self,course_id):
+    self.parser.add_argument('course', type=str, location='json', required=True)
+    self.parser.add_argument('year', type=str, location='json', required=True)
+    self.parser.add_argument('semester', type=int, location='json', required=True)
+    self.parser.add_argument('section', type=str, location='json', required=True)
+    self.parser.add_argument('instructor', type=str, location='json', required=True)
+    args = self.parser.parse_args()
+    course = Course.objects(uuid=course_id).first()
+    self.abort_if_course_doesnt_exist(course) 
+    
 
 class CoursesList(Resource):
   def __init__(self):
