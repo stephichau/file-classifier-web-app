@@ -133,6 +133,7 @@ class AnswersList(Resource):
     abort_if_course_doesnt_exist(course)
 
     # Create template file in filesystem
+    print(app.config['DATA_DIR'])
     
 
 
