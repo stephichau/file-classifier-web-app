@@ -119,7 +119,6 @@ class AnswersList(Resource):
     abort(400, message="Answer couldn't be created")
 
   def get(self,course_id):
-    print(course_id)
     course = Course.objects(uuid=course_id).first()
     answers = Answer.objects(course=course).all()
     abort_if_course_doesnt_exist(course)    
