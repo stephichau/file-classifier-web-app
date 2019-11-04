@@ -1,9 +1,7 @@
 from time import time, asctime, localtime
 import os
 import sys
-import io
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
-
 
 from utils.log import cool_print_decoration, cool_print, print_invalid_file
 from utils.file_merger import pdf_merger
@@ -18,9 +16,9 @@ from PIL import Image
 
 TEMPLATE_DIRECTORY = 'TEMPLATES'
 
-def main(_data: dict) -> int:
+def main(_file: str) -> int:
 
-    # _data = read_data(_file) if check_file(_file) else {}
+    _data = read_data(_file) if check_file(_file) else {}
     
     if not _data:
         print_invalid_file(_file)
@@ -30,18 +28,32 @@ def main(_data: dict) -> int:
     EVALUATION = _data['evaluation']
 
     create_directory(f'{os.getcwd()}/ANSWER_SHEETS/') if not os.path.exists(f'{os.getcwd()}/ANSWER_SHEETS/') else None
+
     ANSWER_SHEETS_DIR_PATH = f'{os.getcwd()}/ANSWER_SHEETS/{COURSE_NAME}_{EVALUATION}'
+
+    cool_print(f'\nAnswer sheets will be available in: {ANSWER_SHEETS_DIR_PATH}', style='result')
+
     _current_time = asctime(localtime(time()))
+    cool_print(f'\n\nInitializing program...[{_current_time}]', style='info')
     
     if png_template_exists(f'{TEMPLATE_DIRECTORY}/{_data["template"]}'):
+        cool_print_decoration('ERROR: Found template in .pdf format.\nConverting template to .png format...', 'danger')
         pdf_to_png(f'{TEMPLATE_DIRECTORY}/{_data["template"]}.pdf')
 
     create_directory(ANSWER_SHEETS_DIR_PATH) if not os.path.exists(ANSWER_SHEETS_DIR_PATH) else None
+
     _data['template'] = f'{TEMPLATE_DIRECTORY}/{_data["template"]}.png'
+    cool_print(f'\nPreparing data...', style='info')
     _files = make_files(_data, _save_file=False)
+
+    cool_print(f'\nAdding texts to templates...', style='info')
     _answer_sheets = composite_multiple_images(_files, _save_pages=False, _save_path=ANSWER_SHEETS_DIR_PATH)
     
+    cool_print(f'\nMerging files...[could take a while]', style='info')
     pdf_merger(_answer_sheets, f'{ANSWER_SHEETS_DIR_PATH}/compilation.pdf')
+
+    cool_print(f'\nDone!', style='info')
+
     return 1
 
 

@@ -1,27 +1,18 @@
 from flask_restful import Resource, Api, abort, reqparse
 from flask import jsonify, request
 from werkzeug.datastructures import FileStorage
-from app import app
-from .models import Course, Answer
-
 from mongoengine import *
-from sheet_maker import main as make_sheet
 
 from pathlib import Path
 import os
 import json
 
+from app import app
+from .models import Course, Answer
+from .utils.answer_maker import maker
+
 connect(os.getenv('MONGODB'))
 api = Api(app)
-
-
-def make_answer_sheet(data: dict):
-  if make_sheet.main(data):
-    COURSE_NAME = data['course']
-    EVALUATION = data['evaluation']
-    ANSWER_SHEETS_DIR_PATH = f'{os.getcwd()}/ANSWER_SHEETS/{COURSE_NAME}_{EVALUATION}/compilation.pdf'
-    return ANSWER_SHEETS_DIR_PATH, True
-  return '', False
 
 def dict_transformation(qset):
   # Extracted from
@@ -110,11 +101,9 @@ class Answers(Resource):
     self.parser.add_argument('upper_bound', type=int, location='json', required=True)
     self.parser.add_argument('lower_bound', type=str, location='json', required=True)
     self.parser.add_argument('evaluation', type=int, location='json', required=True)
-    self.parser.add_argument('section', type=str, location='json', required=True)
-    self.parser.add_argument('instructor', type=str, location='json', required=True)
 
   def get(self):
-    return {'course': 'course_data'}
+    pass
 
   def put(self):
     pass
@@ -126,6 +115,9 @@ class AnswersList(Resource):
   def __init__(self):
     self.parser = reqparse.RequestParser()
 
+  def abort_if_answer_cant_be_created(self):
+    abort(400, message="Answer couldn't be created")
+
   def get(self,course_id):
     print(course_id)
     course = Course.objects(uuid=course_id).first()
@@ -134,36 +126,71 @@ class AnswersList(Resource):
     return jsonify({'answers': dict_transformation(answers)})
 
   def post(self,course_id):
-    self.parser.add_argument('template', type=werkzeug.FileStorage, location='files', required=True)
-    self.parser.add_argument('upper_bound', type=str, location='form', required=True)    
+    self.parser.add_argument('template', type=FileStorage, location='files', required=True)
+    self.parser.add_argument('upper_bound', type=int, location='form', required=True)    
     self.parser.add_argument('lower_bound', type=int, location='form', required=True)
     self.parser.add_argument('evaluation', type=str, location='form', required=True)
     args = self.parser.parse_args()
     app.logger.debug(args)
+
     # Search for course
     course = Course.objects(uuid=course_id).first()
     abort_if_course_doesnt_exist(course)
 
-    # Create template file in filesystem
-
+    # Define template dir where the templates will be stored in filesystem
     template_dir = Path(app.config['DATA_DIR']) / course.year \
                    / str(course.semester) / course.name / str(course.section) \
                    / args['evaluation'] / 'templates'
 
-    app.logger.debug(template_dir)    
-    template = args['template']
-    template.save(str(template_dir / 'template.png'))
+    if not template_dir.exists():
+      # Create file directory with parents
+      template_dir.mkdir(parents=True)
 
-    answer = Answer(
-      course = course,
-      upper_bound = args['upper_bound'],
-      lower_bound = args['lower_bound'],
-      evaluation = args['evaluation'],
-      template = args['template']
-    )
+    # Define answer dir where the templates will be stored in filesystem
+    answer_dir = Path(app.config['DATA_DIR']) / course.year \
+                  / str(course.semester) / course.name / str(course.section) \
+                  / args['evaluation'] / 'answers'
 
-    if answer.save():
+    if not answer_dir.exists():
+      # Create file directory with parents
+      answer_dir.mkdir(parents=True)
 
+    template_file = args['template']
+    template_filepath = template_dir / template_file.filename
+
+    app.logger.debug(template_filepath)
+
+    template_file.save(str(template_filepath))
+
+    # Data for sheet_maker function
+    data = {
+      'course': course.name,
+      'upper_bound': args['upper_bound'],
+      'lower_bound': args['lower_bound'],
+      'evaluation': args['evaluation'],
+      'template_dir': str(template_dir),
+      'answer_dir': str(answer_dir),
+      'template' : template_file.filename,
+    }
+
+    if maker(data):
+      # This is also define on maker function. TODO: define this in the data dict
+      answer_filename = f'{data["course"]}_{data["lower_bound"]}_{data["upper_bound"]}.pdf'
+      answer_file = Path(answer_dir / answer_filename).open(mode='rb')
+
+      answer = Answer(
+        course = course,
+        upper_bound = args['upper_bound'],
+        lower_bound = args['lower_bound'],
+        evaluation = args['evaluation'],
+        template = args['template'],
+        answer_file = answer_file
+      )
+
+      # answer.answer_file.put(answer_file)
+      if answer.save():
+        return jsonify({'answer': dict_transformation(answer)}) 
+      return self.abort_if_answer_cant_be_created()
 
 
 class Users(Resource):
@@ -193,7 +220,6 @@ api.add_resource(CoursesList, '/courses')
 ## Answer resources
 api.add_resource(Answers, '/courses/<string:course_id>/answers/<string:answer_id>')
 api.add_resource(AnswersList, '/courses/<string:course_id>/answers')
-
 
 ##User resources
 # api.add_resource(Users, '/users/<string:user_id>')

@@ -14,7 +14,7 @@ def make_files(_file_data: dict, _save_file=False) -> list:
     _upper_bound = int(_file_data['upper_bound'])
     _course = _file_data['course']
     _eval = _file_data['evaluation']
-    _template_path = _file_data['template']
+    _template_path = _file_data['template_filepath']
 
     for idx in progress(range(_lower_bound, _upper_bound + 1)):
         # _data = f'{_course}_{_eval}__{idx}'
