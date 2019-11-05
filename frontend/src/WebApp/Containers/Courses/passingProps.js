@@ -39,8 +39,8 @@ export default (props) => {
 
   const [toastId, setToastId] = useState(null);
 
-  const loadToast = (restOfProps = {}) => {
-    if (toastId) return toast.update(toastId, restOfProps);
+  const loadToast = (oldToastId, restOfProps = {}) => {
+    if (toastId || oldToastId) return toast.update(oldToastId || toastId, restOfProps);
     return toast(<LoadingToast content="En Proceso" />, { closeButton: false });
   };
 
@@ -65,7 +65,7 @@ export default (props) => {
     },
     loading,
     onNewCourse: onNewCourseWrapper,
-    createCourse: generic[POST_COURSE],
+    createCourse: get(generic, `${POST_COURSE}`),
     loadToast,
     toastId,
     isSubmitting,

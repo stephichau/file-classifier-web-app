@@ -24,7 +24,10 @@ const Courses = ({
   useEffect(() => {
     if (createCourse) {
       if (!createCourse.loading) hideModal();
-      if (createCourse.payload) loadToast(toastId, { type: 'success', closeButton: false, render: 'Creando curso...' })
+      if (createCourse.payload) {
+        console.log('hereee');
+        loadToast(toastId, { type: 'success', closeButton: false, render: 'Creado!' });
+      }
       if (createCourse.error) {
         loadToast(toastId, {
           type: 'error',
