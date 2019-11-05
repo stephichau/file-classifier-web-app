@@ -3,13 +3,16 @@ import { toast } from 'react-toastify';
 import get from 'loadsh/get';
 import { LoadingToast } from '../../../WebUI/Toast';
 import actions from '../../../store/actions';
-import config from './section-config';
+import config from './utils/section-config';
+import getI18n from './utils/i18n';
+import defaultFileOptions from './utils/defaultFileOptions';
 
 export default ({
   history,
   showAnswerSheetModal,
   submitAnswerSheet,
   generic,
+  getCourse,
   ...restOfProps
 }) => {
 
@@ -20,58 +23,34 @@ export default ({
     classifier: {
       POST_CLASSIFIER_FORM,
     },
+    courses: {
+      GET_COURSE,
+    },
   } = actions;
+
+  const { location } = history;
+  const courseId = location.pathname.split('/').pop() || '';
 
   const [toastId, setToastId] = useState(null);
 
-  const { location } = history;
-  const courseName = location.pathname.split('/').pop() || '';
-  const sheetMakerProps = {
-    sheetMaker: {
-      title: 'Crear hojas de respuestas',
-      course: 'Sigla del Curso',
-      evaluation: 'Evaluación',
-      year: 'Año',
-      semester: 'Semestre',
-      section: 'Sección',
-      instructor: 'Apellido del Instructor',
-      lowerBound: 'Límite inferior',
-      upperBound: 'Límite superior',
-      template: 'Nombre del archivo de template',
-      copies: 'Copias por alumno',
-    },
-    classifyFiles: {
-      title: 'Formulario para clasificar una evaluación',
-      course: 'Curso',
-      year: 'Año',
-      section: 'Sección',
-      semester: 'Semestre',
-      sheetId: 'Google Sheet ID',
-    },
-    form: {
-      cancel: 'Cancelar',
-      submit: 'Crear',
-    },
-  };
+  const fetchCourse = get(generic, `${GET_COURSE}.payload`, undefined);
+  const isCourseLoading = get(generic, `${GET_COURSE}.loading`, false);
 
-  const loadToast = (toastId = null, restOfProps = {}) => {
-    if (toastId) return toast.update(toastId, restOfProps);
+  if (
+    (
+      typeof fetchCourse === 'undefined' && !isCourseLoading
+    ) || (
+      fetchCourse && fetchCourse.uuid !== courseId
+    )) getCourse(courseId)
+
+  const sheetMakerProps = getI18n();
+
+  const loadToast = (oldToastId = null, restOfProps = {}) => {
+    if (oldToastId || toastId) return toast.update(oldToastId || toastId, restOfProps);
     return toast(<LoadingToast content="En Proceso" />, { closeButton: false });
   };
 
-  const fileOptions = [{
-      label: 'SCANS/IIC2333/p1-mt-2019-2',
-      value: 'SCANS/IIC2333/p1-mt-2019-2',
-    },
-    {
-      label: 'SCANS/IIC2333/p2-mt-2019-2',
-      value: 'SCANS/IIC2333/p2-mt-2019-2',
-    },
-    {
-      label: 'SCANS/IIC2333/p3-mt-2019-2',
-      value: 'SCANS/IIC2333/p3-mt-2019-2',
-    },
-  ];
+  const fileOptions = defaultFileOptions;
 
   const options = config({
     sheetMakerProps,
@@ -89,17 +68,17 @@ export default ({
   return {
     ...restOfProps,
     generic,
-    courseName,
+    courseName: get(fetchCourse, 'name', null) || courseId,
     options,
     isLoading,
     answerSheet: generic[POST_ANSWER_SHEET] && {
       ...generic[POST_ANSWER_SHEET],
-      success: 'Creando hojas...',
+      success: 'Creado!',
       error: 'Hubo un error. Intente nuevamente',
     },
     classifierForm: generic[POST_CLASSIFIER_FORM] && {
       ...generic[POST_CLASSIFIER_FORM],
-      success: 'Clasificando hojas...',
+      success: 'Clasificado!',
       error: 'Hubo un error. Intente nuevamente',
     },
     toast: {

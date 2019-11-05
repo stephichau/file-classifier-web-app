@@ -1,4 +1,4 @@
-import actions from '../../../store/actions';
+import actions from '../../../../store/actions';
 
 export default ({
   sheetMakerProps,

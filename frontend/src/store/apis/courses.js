@@ -14,6 +14,11 @@ const courses = {
       'accept': 'application/json'
     },
   }),
+  get: courseUuid => axios.get(`/courses/${courseUuid}`, {
+    headers: {
+      'accept': 'application/json'
+    },
+  }),
 };
 
 export default courses;

@@ -64,7 +64,7 @@ const Courses = ({
             !loading && courses && courses.map((course, index) => (
               <ButtonBase
                 className={classes.card}
-                onClick={() => onClick(course.title)}
+                onClick={() => onClick(course.id)}
                 disabled={isSubmitting}
               >
                 <SmallInfoCard {...course} key={`Info--${index}`}>
