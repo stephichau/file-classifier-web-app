@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
-import API from './apis';
-import actions from './actions';
+import API from '../apis';
+import actions from '../actions';
 const {
   answerSheet: {
     POST_ANSWER_SHEET_REQUEST,
@@ -24,8 +24,6 @@ function* postAnswerSheets(action) {
   }
 }
 
-function* sagas() {
+export default function* answerSheetSagas() {
   yield takeLatest(POST_ANSWER_SHEET_REQUEST, postAnswerSheets);
 }
-
-export default sagas;
