@@ -1,36 +1,41 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import get from 'loadsh/get';
+import {
+  onNewCourse,
+  parseCoursesFromBackend,
+} from './utils/coursesHelper';
+import getI18n from './utils/i18n';
+import {
+  defaultCourses,
+  mapDefaultCourseIdWithName,
+} from './utils/defaultCourses';
 import { LoadingToast } from '../../../WebUI/Toast';
 import actions from '../../../store/actions';
+
 
 export default (props) => {
   const {
     showCreateCourseModal,
     submitCreateCourseModal,
     generic,
+    getCourses,
   } = props;
 
   const {
     courses: {
       POST_COURSE,
+      GET_COURSES,
     },
   } = actions;
 
-  const i18n = {
-    createCourse: {
-      title: 'Formulario para crear un curso',
-      course: 'Curso',
-      year: 'Año',
-      section: 'Sección',
-      semester: 'Semestre',
-      instructor: 'Apellido del profesor',
-    },
-    form: {
-      cancel: 'Cancelar',
-      submit: 'Crear',
-    },
-  };
+  const fetchedCourses = get(generic, `${[GET_COURSES]}.payload`, undefined);
+  const loading = get(generic, `${[GET_COURSES].loading}`) || false;
+  const courseCount = get(fetchedCourses, 'length', null) || defaultCourses.length;
+
+  if (typeof fetchedCourses === 'undefined' && !loading) getCourses();
+
+  const i18n = getI18n();
 
   const [toastId, setToastId] = useState(null);
 
@@ -39,49 +44,27 @@ export default (props) => {
     return toast(<LoadingToast content="En Proceso" />, { closeButton: false });
   };
 
-  const onNewCourse = () => {
-    showCreateCourseModal({
-      title: i18n.createCourse.title,
+  const onNewCourseWrapper = () => {
+    onNewCourse({
       i18n,
-      onSubmit: (props) => {
-        const toastId = loadToast();
-        submitCreateCourseModal(props);
-        setToastId(toastId);
-      },
+      setToastId,
+      showCreateCourseModal,
+      submitCreateCourseModal,
+      loadToast,
       action: POST_COURSE,
     });
   };
 
-  const courses = [
-    {
-      title: 'IIC2233',
-      subtitle: 'Programación Avanzada',
-    },
-    {
-      title: 'IIC2333',
-      subtitle: 'SSOO y Redes',
-    },
-    {
-      title: 'IIC1103',
-      subtitle: 'Introducción a la Programación',
-    },
-    {
-      title: 'IIC2513',
-      subtitle: 'Tecnología y Aplicaciones Web',
-    }
-  ];
-
-  const courseCount = courses.length;
   const isSubmitting = get(generic, `${[POST_COURSE].loading}`) || false;
 
   return {
     ...props,
     data: {
-      courses,
+      courses: parseCoursesFromBackend(fetchedCourses || defaultCourses, mapDefaultCourseIdWithName),
       courseCount,
     },
-    loading: false,
-    onNewCourse,
+    loading,
+    onNewCourse: onNewCourseWrapper,
     createCourse: generic[POST_COURSE],
     loadToast,
     toastId,
