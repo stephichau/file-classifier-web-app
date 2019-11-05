@@ -20,6 +20,7 @@ import actions from '../../../store/actions';
 const {
   answerSheet: { POST_ANSWER_SHEET_REQUEST },
   classifier: { POST_CLASSIFIER_FORM_REQUEST },
+  courses: { GET_COURSE_REQUEST },
 } = actions;
 
 const mapStateToProps = ({ user, generic }) => ({
@@ -28,6 +29,7 @@ const mapStateToProps = ({ user, generic }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  getCourse: courseId => dispatch({ type: GET_COURSE_REQUEST, props: courseId }),
   hideModal: () => dispatch(hideModal()),
   showAnswerSheetModal: modalProps => dispatch(showModal(SHEET_MAKER_MODAL, modalProps)),
   submitAnswerSheet: props => dispatch({ type: POST_ANSWER_SHEET_REQUEST, props }),
