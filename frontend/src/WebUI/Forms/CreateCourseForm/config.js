@@ -35,11 +35,11 @@ export default ({
     component: components.NUMBER_INPUT,
     id: 'section',
     label: i18n.createCourse.section,
-    value: state.section || 1,
+    value: state.section,
     classes,
     onChange: (e) => onChange({
       name: 'section',
-      value: e.target.value,
+      value: parseInt(`${e.target.value}`),
     }),
     min: 1,
     defaultValue: defaultValue.section,
