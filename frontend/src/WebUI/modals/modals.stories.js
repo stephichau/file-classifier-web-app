@@ -61,11 +61,12 @@ storiesOf(categoryName, module)
     i18n: {
       createCourse: {
         title: 'Formulario para crear un curso',
-        course: 'Curso',
+        course: 'Sigla del curso',
         year: 'Año',
         section: 'Sección',
         semester: 'Semestre',
         instructor: 'Apellido del profesor',
+        courseName: 'Nombre del curso',
       },
       form: {
         cancel: 'Cancelar',

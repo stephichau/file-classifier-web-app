@@ -3,4 +3,9 @@ export default theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  textField: {
+    '&:hover': {
+      cursor: 'default',
+    },
+  },
 });
