@@ -12,11 +12,9 @@ export default ({
     label: i18n.sheetMaker.course,
     value: state.course || '',
     classes,
-    onChange: (e) => onChange({
-      name: 'course',
-      value: e.target.value,
-    }),
+    onChange: () => {},
     defaultValue: '',
+    readOnly: true,
   },
   {
     component: components.TEXT_INPUT,

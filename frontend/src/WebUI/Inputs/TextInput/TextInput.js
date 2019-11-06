@@ -9,6 +9,9 @@ const TextInput = ({
   id,
   value,
   defaultValue,
+  placeholder,
+  readOnly,
+  ...restOfProps
 }) => {
   useEffect(() => {
     if (defaultValue) onChange({ target: { value: defaultValue }});
@@ -18,19 +21,28 @@ const TextInput = ({
       required
       id={id}
       label={label}
-      defaultValue=""
+      placeholder={placeholder}
       className={classes.textField}
       margin="normal"
       variant="outlined"
       onChange={onChange}
       value={value}
+      InputLabelProps={{
+        shrink: true,
+      }}
+      InputProps={{
+        readOnly,
+      }}
+      {...restOfProps}
     />
   )
 };
 
 TextInput.defaultProps = {
   value: '',
+  placeholder: '',
   defaultValue: undefined,
+  readOnly: false
 };
 
 TextInput.propTypes = {
@@ -39,6 +51,8 @@ TextInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  readOnly: PropTypes.bool,
   defaultValue: PropTypes.oneOf([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
 };
 

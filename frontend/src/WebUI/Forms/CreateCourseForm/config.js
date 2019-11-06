@@ -9,6 +9,19 @@ export default ({
 }) => [
   {
     component: components.TEXT_INPUT,
+    id: 'courseName',
+    label: i18n.createCourse.courseName,
+    value: state.courseName || '',
+    classes,
+    onChange: (e) => onChange({
+      name: 'courseName',
+      value: e.target.value,
+    }),
+    defaultValue: defaultValue.courseName,
+    placeholder: '-',
+  },
+  {
+    component: components.TEXT_INPUT,
     id: 'course',
     label: i18n.createCourse.course,
     value: state.course || '',
@@ -18,6 +31,7 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: defaultValue.course,
+    placeholder: '-',
   },
   {
     component: components.TEXT_INPUT,
@@ -77,5 +91,6 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: defaultValue.instructor,
+    placeholder: '-',
   },
 ];

@@ -36,6 +36,9 @@ const InputSelect = ({
             minLength: 2,
             maxLength: 8,
           }}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
       </Tooltip>
       <SimpleSelectInput
