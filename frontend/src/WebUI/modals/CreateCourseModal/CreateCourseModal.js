@@ -34,11 +34,11 @@ const CreateCourseModal = ({
     defaultValue: defState,
   });
 
-  const invalidState = validateState(state);
+  const validState = validateState(state);
 
   const unTouched = isUntouched(state, defaultValue);
 
-  const unMetRequirements = unTouched || !invalidState;
+  const unMetRequirements = unTouched || !validState;
 
   return (
     <GenericModal>
