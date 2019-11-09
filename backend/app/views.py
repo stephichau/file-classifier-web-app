@@ -97,19 +97,44 @@ class CoursesList(Resource):
 class Answers(Resource):
   def __init__(self):
     self.parser = reqparse.RequestParser(bundle_errors=True)
-    self.parser.add_argument('course_uuid', type=str, location='json', required=True)
-    self.parser.add_argument('upper_bound', type=int, location='json', required=True)
-    self.parser.add_argument('lower_bound', type=str, location='json', required=True)
-    self.parser.add_argument('evaluation', type=int, location='json', required=True)
 
-  def get(self):
-    pass
+  def abort_if_answer_doesnt_exist(self, answer):
+    if answer is None:
+      abort(400, message="Answer doesnt exists")
+  
+  def abort_if_answer_couldnt_be_deleted(self):
+    abort(400, message="Answer couldnt be deleted")
 
-  def put(self):
-    pass
+  def get(self, answer_id):
+    answer = Answer.objects(uuid=answer_id).first()
+    self.abort_if_answer_doesnt_exist(answer)
+    return jsonify({'answer': dict_transformation(answer)})
 
-  def delete(self):
-    pass 
+  def delete(self, answer_id):
+    answer = Answer.objects(uuid=answer_id).first()
+    self.abort_if_answer_doesnt_exist(answer)
+    if answer:
+      answer.delete()
+      return jsonify({'answer': answer_id})
+    return self.abort_if_answer_couldnt_be_deleted()
+
+  def put(self, answer_id):
+    self.parser.add_argument('upper_bound', type=int, location='form', required=True)
+    self.parser.add_argument('lower_bound', type=int, location='form', required=True)
+    self.parser.add_argument('evaluation', type=int, location='form', required=True)
+    self.parser.add_argument('template', type=FileStorage, location='form', required=True)
+
+    args = self.parser.parse_args()
+
+    answer = Answer.objects(uuid=answer_id).first()
+    self.abort_if_answer_doesnt_exist(answer)
+
+    answer.upper_bound = args['upper_bound']
+    answer.lower_bound = args['lower_bound']
+    answer.evaluation = args['evaluation']
+    
+    if answer.save():
+      return jsonify({'answer': dict_transformation(answer)})
 
 class AnswersList(Resource):
   def __init__(self):
