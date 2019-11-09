@@ -9,7 +9,7 @@ import json
 
 from app import app
 from .models import Course, Answer
-from .utils.answer_maker import maker
+from .answer_maker import maker
 
 connect(os.getenv('MONGODB'))
 api = Api(app)
@@ -154,6 +154,7 @@ class AnswersList(Resource):
     self.parser.add_argument('upper_bound', type=int, location='form', required=True)    
     self.parser.add_argument('lower_bound', type=int, location='form', required=True)
     self.parser.add_argument('evaluation', type=str, location='form', required=True)
+    self.parser.add_argument('copies', type=int, location='form', required=True)
     args = self.parser.parse_args()
     app.logger.debug(args)
 
@@ -182,19 +183,23 @@ class AnswersList(Resource):
     template_file = args['template']
     template_filepath = template_dir / template_file.filename
 
-    app.logger.debug(template_filepath)
-
     template_file.save(str(template_filepath))
 
-    # Data for sheet_maker function
+    # Data for sheet_maker function. There are more data needed than necessary
     data = {
       'course': course.name,
       'upper_bound': args['upper_bound'],
       'lower_bound': args['lower_bound'],
       'evaluation': args['evaluation'],
+      'copies': args['copies'],
       'template_dir': str(template_dir),
       'answer_dir': str(answer_dir),
-      'template' : template_file.filename,
+      'template': template_filepath,
+      'semester': course.semester,
+      'section': course.section,
+      'year': course.year,
+      'instructor': course.instructor,
+      'ocr': 'qr'
     }
 
     if maker(data):
@@ -208,7 +213,7 @@ class AnswersList(Resource):
         lower_bound = args['lower_bound'],
         evaluation = args['evaluation'],
         template = args['template'],
-        answer_file = answer_file
+        answer_file = answer_file,
       )
 
       # answer.answer_file.put(answer_file)
