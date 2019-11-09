@@ -23,11 +23,6 @@ def maker(data: dict) -> bool:
   ocr = data['ocr']
   copies = data['copies']
 
-  # print('------')
-  # print(str(template_filepath))
-  # print('------')
-  # print(str(data['template']))
-
   create_directory(str(answer_dir)) if not answer_dir.exists() else None
   create_directory(str(template_dir)) if not template_dir.exists() else None
   

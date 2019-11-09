@@ -183,8 +183,6 @@ class AnswersList(Resource):
     template_file = args['template']
     template_filepath = template_dir / template_file.filename
 
-    app.logger.debug(template_filepath)
-
     template_file.save(str(template_filepath))
 
     # Data for sheet_maker function. There are more data needed than necessary
@@ -216,7 +214,6 @@ class AnswersList(Resource):
         evaluation = args['evaluation'],
         template = args['template'],
         answer_file = answer_file,
-
       )
 
       # answer.answer_file.put(answer_file)
