@@ -8,6 +8,8 @@ const PdfViewer = ({
   classes,
   url,
   i18n,
+  onLoadSuccess,
+  onLoadError,
   ...restOfProps
 }) => {
   const [state, setState] = useState({
@@ -15,13 +17,13 @@ const PdfViewer = ({
     pageNumber: 1,
   });
 
-  const [downloading, setDownloading] = useState(false);
-
-  const onLoadSuccess = ({ numPages }) => {
+  const onGetLoadSuccess = ({ numPages }) => {
+    onLoadSuccess();
     setState({ ...state, numPages });
   };
 
-  const onLoadError = ({ message }) => {
+  const onGetLoadError = ({ message }) => {
+    onLoadError();
     console.log(message);
   };
 
@@ -82,8 +84,9 @@ const PdfViewer = ({
       <div className={classes.documentContainer}>
         <Document
           file={url}
-          onLoadSuccess={onLoadSuccess}
-          onLoadError={onLoadError}
+          onLoadSuccess={onGetLoadSuccess}
+          onLoadError={onGetLoadError}
+          {...restOfProps}
         >
           <Page pageNumber={state.pageNumber} width={600} />
         </Document>
@@ -99,7 +102,9 @@ PdfViewer.defaultProps = {
     next: 'Next',
     download: 'Descargar',
     notAvailable: 'n/a',
-  }
+  },
+  onLoadSuccess: () => {},
+  onLoadError: () => {},
 };
 
 PdfViewer.propTypes = {
@@ -111,6 +116,8 @@ PdfViewer.propTypes = {
     download: PropTypes.string.isRequired,
     notAvailable: PropTypes.string,
   }),
+  onLoadSuccess: PropTypes.func,
+  onLoadError: PropTypes.func,
 };
 
 export default PdfViewer;
