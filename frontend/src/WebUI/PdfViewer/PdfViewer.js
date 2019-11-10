@@ -30,7 +30,7 @@ const PdfViewer = ({
   const onPrevPage = () => {
     setState({
       ...state,
-      pageNumber: state.pageNumber - 1 >= 0 ? state.pageNumber - 1 : 1,
+      pageNumber: state.pageNumber - 1,
     });
   };
 
@@ -41,6 +41,9 @@ const PdfViewer = ({
     });
   };
 
+  const disablePrevButton = state.pageNumber - 1 <= 0;
+  const disableNextButton = state.pageNumber + 1 > state.numPages;
+
   return (
     <div style={{ margin: '0 auto'}}>
       <div className={classes.buttonsContainer}>
@@ -49,6 +52,7 @@ const PdfViewer = ({
             className={classes.button}
             onClick={onPrevPage}
             variant="outlined"
+            disabled={disablePrevButton}
           >
             <Typography variant="caption">
               {i18n.previous}
@@ -64,6 +68,7 @@ const PdfViewer = ({
             className={classes.button}
             onClick={onNextPage}
             variant="outlined"
+            disabled={disableNextButton}
           >
             <Typography variant="caption">
               {i18n.next}
