@@ -1,3 +1,5 @@
+import palette from '../../../WebTheme/palette';
+
 export default theme => ({
   container: {
     border: '1px solid rgba(0, 0, 0, 0.12)',
@@ -8,8 +10,10 @@ export default theme => ({
     paddingBottom: 20,
   },
   title: {
-    marginTop: 50,
-    marginLeft: 50,
+    margin: '20px auto',
+    display: 'flex',
+    justifyContent: 'center',
+    color: palette.toastDefault,
   },
   inputContainer: {
     maxHeight: 350,
@@ -21,15 +25,15 @@ export default theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
     marginRight: 20,
-    marginTop: 'auto',
+    marginTop: 20,
   },
   cancelButton: {
-    backgroundColor: 'red',
+    backgroundColor: palette.secondaryButton,
     color: 'white',
     minWidth: 120,
   },
   submitButton: {
-    backgroundColor: 'blue',
+    backgroundColor: palette.primaryButtton,
     color: 'white',
     minWidth: 120,
     marginLeft: 10,

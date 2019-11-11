@@ -22,6 +22,7 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: defaultValue.course,
+    placeholder: 'Sigla del curso',
   },
   {
     component: components.TEXT_INPUT,
@@ -34,6 +35,7 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: defaultValue.year,
+    placeholder: 'De la evaluación',
   },
   {
     component: components.SIMPLE_SELECT,
@@ -81,6 +83,7 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: defaultValue.sheetId,
+    placeholder: 'ID de la planilla QR-Alumno',
   },
   {
     component: components.MULTIPLE_SELECT,
