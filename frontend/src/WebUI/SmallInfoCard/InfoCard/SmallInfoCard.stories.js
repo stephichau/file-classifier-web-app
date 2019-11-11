@@ -2,6 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import SmallInfoCard from './index';
 
+import palette from '../../../WebTheme/palette';
+
 const categoryName = 'AssembledComponents/Cards';
 
 storiesOf(categoryName, module).add('SmallInfoCards', () => {
@@ -16,7 +18,7 @@ storiesOf(categoryName, module).add('SmallInfoCards', () => {
       <div style={{ height: 20, width: 20}} />
       <SmallInfoCard {...defaultProps}>
         <div style={{
-          width: '100%', height: 60, backgroundColor: 'blue', marginTop: -60, borderRadius: '0 0 4px 4px',
+          width: '100%', height: 65, backgroundColor: palette.indigo500, marginTop: -40, borderRadius: '0 0 4px 4px',
           }} />
       </SmallInfoCard>
        <div style={{ height: 20, width: 20}} />

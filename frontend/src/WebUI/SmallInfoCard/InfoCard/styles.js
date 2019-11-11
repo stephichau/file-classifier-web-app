@@ -1,7 +1,9 @@
-export default theme => ({
+import palette from '../../../WebTheme/palette';
+
+export default () => ({
   container: {
-    border: '1px solid rgba(0,0,0,0.12)',
-    boxShadow: '0 0 2px 1px rgba(0,0,0,0.12)',
+    border: `1px solid ${palette.boxShadowLightGrey}`,
+    boxShadow: `0 0 2px 1px ${palette.boxShadowLightGrey}`,
     height: 185,
     width: 350,
   },
