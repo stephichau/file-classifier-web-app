@@ -6,6 +6,9 @@ export default () => ({
     boxShadow: `0 0 2px 1px ${palette.boxShadowLightGrey}`,
     height: 185,
     width: 350,
+    '&:hover': {
+      transform: 'translateY(-0.2rem) scale(1.015)',
+    },
   },
   solid: {
     borderStyle: 'solid',
