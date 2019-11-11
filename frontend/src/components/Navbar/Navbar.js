@@ -32,7 +32,7 @@ export const Navbar = (props) => {
 
       <Divider />
 
-      {sections.map((section) => {
+      {sections.map((section, idx) => {
         const { heading } = section;
 
         return (
@@ -43,14 +43,16 @@ export const Navbar = (props) => {
               </div>
             ) : null}
 
-            {section.items.map((item, index) => {
+            {sections.length ? section.items.map((item, index) => {
               const {
                 href, items, icon, name
               } = item;
               return (
                 <Item key={`item-${name}`} id={index} href={href} items={items} icon={icon} name={name} />
               );
-            })}
+            }) : (
+            <Item key={`item-${section.name}`} id={idx} href={section.href} items={section.items} icon={section.icon} name={section.name} />
+            )}
           </div>
         );
       })}

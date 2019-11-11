@@ -14,14 +14,18 @@ export const App = () => {
     {
       heading: 'Web App',
       items: [
+        // {
+        //   name: 'Routes',
+        //   icon: 'fas fa-fw fa-cog',
+        //   items: [
+        //   //   { itemName: '404', itemHref: '/404' },
+        //   //   { itemName: '500', itemHref: '/500' }
+        //   ]
+        // },
         {
-          name: 'Routes',
-          icon: 'fas fa-fw fa-cog',
-          items: [
-             { itemName: 'Courses', itemHref: '/courses', itemIcon: 'fas fa-fw fa-home' },
-          //   { itemName: '404', itemHref: '/404' },
-          //   { itemName: '500', itemHref: '/500' }
-          ]
+          name: 'Courses',
+          href: '/courses',
+          icon: 'fas fa-fw fa-home'
         },
       ]
     }
