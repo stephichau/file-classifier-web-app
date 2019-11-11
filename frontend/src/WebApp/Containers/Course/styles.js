@@ -26,7 +26,6 @@ export default theme => ({
     fontSize: 22,
     borderRadius: 4,
     '&:hover': {
-      border: `1.5px solid ${palette.toastWarning}`,
       borderRadius: 4,
       width: '100%',
       height: '100%',

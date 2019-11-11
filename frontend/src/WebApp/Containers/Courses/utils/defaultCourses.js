@@ -1,23 +1,38 @@
 export const defaultCourses = ([
   {
-    title: 'IIC2233',
+    name: 'IIC2233',
     subtitle: 'Programación Avanzada',
+    section: 1,
+    uuid: '1',
+    instructor: 'Ruz',
   },
   {
-    title: 'IIC2333',
+    name: 'IIC2333',
     subtitle: 'SSOO y Redes',
+    section: 1,
+    uuid: '2',
+    instructor: 'Ruz',
   },
   {
-    title: 'IIC1103',
+    name: 'IIC1103',
     subtitle: 'Introducción a la Programación',
+    section: 1,
+    uuid: '3',
+    instructor: 'Ruz',
   },
   {
-    title: 'IIC2513',
+    name: 'IIC2513',
     subtitle: 'Tecnología y Aplicaciones Web',
+    section: 1,
+    uuid: '4',
+    instructor: 'Vidal',
   },
   {
-    title: 'IIC1253',
+    name: 'IIC1253',
     subtitle: 'Matemáticas Discretas',
+    section: 1,
+    uuid: '5',
+    instructor: 'Riveros',
   }
 ]);
 

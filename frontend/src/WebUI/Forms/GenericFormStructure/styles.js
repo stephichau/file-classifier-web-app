@@ -2,18 +2,23 @@ import palette from '../../../WebTheme/palette';
 
 export default theme => ({
   container: {
-    border: '1px solid rgba(0, 0, 0, 0.12)',
+    border: `1px solid ${palette.boxShadowLightGrey}`,
+    borderBottom: 0,
     minHeight: 200,
     maxHeight: 500,
     minWidth: 300,
     maxWidth: 500,
     paddingBottom: 20,
+    marginBottom: 20,
   },
   title: {
     margin: '20px auto',
     display: 'flex',
     justifyContent: 'center',
     color: palette.toastDefault,
+    '&:hover': {
+      cursor: 'default',
+    },
   },
   inputContainer: {
     maxHeight: 350,

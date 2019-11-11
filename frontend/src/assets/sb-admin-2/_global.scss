@@ -18,6 +18,7 @@ a {
 // Main page wrapper
 #wrapper {
   display: flex;
+  overflow-y: scroll;
   #content-wrapper {
     background-color: $gray-100;
     width: 100%;

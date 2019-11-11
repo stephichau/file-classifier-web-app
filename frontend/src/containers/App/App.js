@@ -14,14 +14,18 @@ export const App = () => {
     {
       heading: 'Web App',
       items: [
+        // {
+        //   name: 'Routes',
+        //   icon: 'fas fa-fw fa-cog',
+        //   items: [
+        //   //   { itemName: '404', itemHref: '/404' },
+        //   //   { itemName: '500', itemHref: '/500' }
+        //   ]
+        // },
         {
-          name: 'Routes',
-          icon: 'fas fa-fw fa-cog',
-          items: [
-             { itemName: 'Courses', itemHref: '/courses', itemIcon: 'fas fa-fw fa-home' },
-          //   { itemName: '404', itemHref: '/404' },
-          //   { itemName: '500', itemHref: '/500' }
-          ]
+          name: 'Courses',
+          href: '/courses',
+          icon: 'fas fa-fw fa-home'
         },
       ]
     }
@@ -40,7 +44,10 @@ export const App = () => {
       <div id="wrapper">
         <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
           <Navbar sections={sections} history={history} />
-          <div id="content-wrapper" className="d-flex flex-column">
+          <div id="content-wrapper" className="d-flex flex-column" style={{
+            overflowX: 'unset',
+            minWidth: 550,
+          }}>
             <TopNav links={links} history={history} />
             <Routes history={history} />
             <RootContainer />

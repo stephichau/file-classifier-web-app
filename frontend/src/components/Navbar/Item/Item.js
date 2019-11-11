@@ -57,7 +57,7 @@ class Item extends Component {
     return (
       <li className="nav-item">
         <Link className="nav-link" to={href}>
-          {icon ? <Icon className="fas fa-fw fa-chart-area" /> : null}
+          {icon ? <Icon className="fas fa-fw fa-chart-area" icon={icon} /> : null}
           <span><Trans>{name}</Trans></span>
         </Link>
       </li>

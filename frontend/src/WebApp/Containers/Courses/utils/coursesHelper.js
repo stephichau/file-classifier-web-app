@@ -20,6 +20,6 @@ export const onNewCourse = ({
 
 export const parseCoursesFromBackend = (courses, getSubtitle) => courses.map(course => ({
   title: `${course.name} - ${course.section}`,
-  subtitle: getSubtitle[course.name],
+  subtitle: `${getSubtitle[course.name]} - ${course.instructor}`,
   id: course.uuid,
 }));
