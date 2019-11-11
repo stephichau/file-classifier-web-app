@@ -42,7 +42,7 @@ export const App = () => {
           <Navbar sections={sections} history={history} />
           <div id="content-wrapper" className="d-flex flex-column" style={{
             overflowX: 'unset',
-            minWidth: 450,
+            minWidth: 550,
           }}>
             <TopNav links={links} history={history} />
             <Routes history={history} />
