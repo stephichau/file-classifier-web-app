@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 
 const GenericFormStructure = ({
   classes,
@@ -19,12 +20,16 @@ const GenericFormStructure = ({
     elevation={0}
     className={classes.container}
   >
-    <Typography className={classes.title}>
-      {title}
-    </Typography>
+    <div className={classes.title}>
+      <Typography variant="body1">
+        {title}
+      </Typography>
+    </div>
+    <Divider />
     <div className={classes.inputContainer}>
       {children}
     </div>
+    <Divider />
     <div className={classes.buttonsContainer}>
       <Button
         onClick={onCancel}
