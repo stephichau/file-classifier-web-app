@@ -28,12 +28,13 @@ storiesOf(categoryName, module).add('CreateCourseForm', () => {
   const i18n = {
     createCourse: {
       title: 'Formulario para crear un curso',
-      course: 'Curso',
+      course: 'Sigla del curso',
       year: 'Año',
       section: 'Sección',
       semester: 'Semestre',
       instructor: 'Apellido del profesor',
       files: 'Preguntas',
+      courseName: 'Nombre del curso',
     },
   };
  

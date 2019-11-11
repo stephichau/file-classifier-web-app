@@ -44,6 +44,7 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: defaultValue.year,
+    placeholder: 'De la evaluación',
   },
   {
     component: components.NUMBER_INPUT,

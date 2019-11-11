@@ -15,6 +15,7 @@ export default ({
     onChange: () => {},
     defaultValue: '',
     readOnly: true,
+    placeholder: '-',
   },
   {
     component: components.TEXT_INPUT,
@@ -27,6 +28,7 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: '',
+    placeholder: 'Ej: I1, I2, ...',
   },
   {
     component: components.TEXT_INPUT,
@@ -39,6 +41,7 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: 2019,
+    placeholder: 'De la evaluación',
   },
   {
     component: components.TEXT_INPUT,
@@ -51,6 +54,7 @@ export default ({
       value: e.target.value,
     }),
     defaultValue: '',
+    placeholder: '-',
   },
   {
     component: components.SIMPLE_SELECT,
