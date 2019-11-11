@@ -1,32 +1,54 @@
+const getStyleProps = (widthInPercent, centered = false) => ({
+  style: {
+    width: `${widthInPercent}%`,
+    justifyContent: centered ? 'center' : 'inherit',
+  },
+  headerStyle: {
+    width: `${widthInPercent}%`,
+    justifyContent: centered ? 'center' : 'inherit',
+  },
+});
+
 const mockData = [
   {
-    width: 200,
-    label: 'Dessert',
-    dataKey: 'dessert',
+    ...getStyleProps(5),
+    label: '#',
+    dataKey: 'index',
   },
   {
-    width: 120,
-    label: 'Calories\u00A0(g)',
-    dataKey: 'calories',
-    numeric: true,
+    ...getStyleProps(12),
+    label: 'Evaluation',
+    dataKey: 'evaluation',
   },
   {
-    width: 120,
-    label: 'Fat\u00A0(g)',
-    dataKey: 'fat',
-    numeric: true,
+    ...getStyleProps(12),
+    label: 'Course Id',
+    dataKey: 'courseId',
   },
   {
-    width: 120,
-    label: 'Carbs\u00A0(g)',
-    dataKey: 'carbs',
-    numeric: true,
+    ...getStyleProps(24),
+    label: 'Course Name',
+    dataKey: 'courseName',
   },
   {
-    width: 120,
-    label: 'Protein\u00A0(g)',
-    dataKey: 'protein',
-    numeric: true,
+    ...getStyleProps(9.5, true),
+    label: 'Year',
+    dataKey: 'year',
+  },
+  {
+    ...getStyleProps(12.5, true),
+    label: 'Section',
+    dataKey: 'section',
+  },
+  {
+    ...getStyleProps(15),
+    label: 'Instructor',
+    dataKey: 'instructor',
+  },
+  {
+    ...getStyleProps(10),
+    label: 'Published',
+    dataKey: 'published',
   },
 ];
 

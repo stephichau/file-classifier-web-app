@@ -9,22 +9,26 @@ const categoryName = 'AssembledComponents';
 
 storiesOf(categoryName, module).add('Table', () => {
   const sample = [
-    ['Frozen yoghurt', 159, 6.0, 24, 4.0],
-    ['Ice cream sandwich', 237, 9.0, 37, 4.3],
-    ['Eclair', 262, 16.0, 24, 6.0],
-    ['Cupcake', 305, 3.7, 67, 4.3],
-    ['Gingerbread', 356, 16.0, 49, 3.9],
+    ['MT', 'IIC2333', 'Sistema Operativos y Redes', 2019, 1, 1, 'Ruz'],
+    ['Exam', 'IIC2333', 'Sistema Operativos y Redes', 2019, 1, 1, 'Ruz'],
+    ['I1', 'IIC2233', 'Programación Avanzada', 2019, 1, 1, 'Ruz'],
+    ['I1', 'IIC2233', 'Programación Avanzada', 2019, 1, 2, 'Florenzano'],
+    ['I1', 'IIC2513', 'Tecnología y Aplicaciones Web', 2019, 1, 1, 'Vidal'],
+    ['I2', 'IIC2513', 'Tecnología y Aplicaciones Web', 2019, 1, 1, 'Vidal'],
+    ['I3', 'IIC2513', 'Tecnología y Aplicaciones Web', 2019, 1, 1, 'Vidal'],
   ];
 
-  function createData(id, dessert, calories, fat, carbs, protein) {
-    return { id, dessert, calories, fat, carbs, protein };
+  const createData = (index, evaluation, courseId, courseName, year, semester, section, instructor, published = 'No') => {
+    return {
+      index, evaluation, courseName, courseId, year, semester, section, instructor, published,
+    };
   }
 
   const rows = [];
 
   for (let i = 0; i < 200; i += 1) {
     const randomSelection = sample[Math.floor(Math.random() * sample.length)];
-    rows.push(createData(i, ...randomSelection));
+    rows.push(createData(i + 1, ...randomSelection));
   }
   const defaultProps = {
     rowCount: rows.length,
@@ -35,7 +39,11 @@ storiesOf(categoryName, module).add('Table', () => {
   };
 
   return (
-    <Paper style={{ height: 400, width: '100%' }}>
+    <Paper style={{
+      height: 400,
+      width: '100%',
+      minWidth: 805,
+    }}>
       <VirtualizedTable {...defaultProps} />
     </Paper>
   );

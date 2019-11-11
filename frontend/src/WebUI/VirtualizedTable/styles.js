@@ -3,6 +3,7 @@ export default theme => ({
     display: 'flex',
     alignItems: 'center',
     boxSizing: 'border-box',
+    justifyContent: 'inherit',
   },
   table: {
     // temporary right-to-left patch, waiting for
@@ -10,6 +11,17 @@ export default theme => ({
     '& .ReactVirtualized__Table__headerRow': {
       flip: false,
       paddingRight: theme.direction === 'rtl' ? '0px !important' : undefined,
+      justifyContent: 'inherit',
+    },
+    '& .ReactVirtualized__Table__headerColumn': {
+      marginLeft: 0,
+      marginRight: 0,
+    },
+    '& .ReactVirtualized__Table__headerColumn:first-of-type': {
+      marginLeft: 0,
+    },
+    '& .ReactVirtualized__Table__rowColumn:first-of-type': {
+      marginLeft: 0,
     },
   },
   tableRow: {

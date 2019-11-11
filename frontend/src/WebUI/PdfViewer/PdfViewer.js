@@ -45,7 +45,7 @@ const PdfViewer = ({
   const disableNextButton = state.pageNumber + 1 > state.numPages;
 
   return (
-    <div style={{ margin: '0 auto'}}>
+    <div>
       <div className={classes.buttonsContainer}>
         <div className={classes.pagesContainer}>
           <Button
