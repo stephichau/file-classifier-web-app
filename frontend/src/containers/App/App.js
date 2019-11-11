@@ -40,7 +40,10 @@ export const App = () => {
       <div id="wrapper">
         <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
           <Navbar sections={sections} history={history} />
-          <div id="content-wrapper" className="d-flex flex-column">
+          <div id="content-wrapper" className="d-flex flex-column" style={{
+            overflowX: 'unset',
+            minWidth: 450,
+          }}>
             <TopNav links={links} history={history} />
             <Routes history={history} />
             <RootContainer />

@@ -8,6 +8,7 @@ import Brand from './Brand/Brand';
 import Divider from './Divider/Divider';
 import Item from './Item/Item';
 import actions from '../../store/actions';
+import palette from '../../WebTheme/palette';
 
 export const Navbar = (props) => {
   const {
@@ -18,8 +19,11 @@ export const Navbar = (props) => {
 
   return (
     <ul
-      className={`navbar-nav bg-gradient-primary sidebar sidebar-dark accordion${expanded ? '' : ' toggled'}`}
+      className={`navbar-nav sidebar sidebar-dark accordion${expanded ? '' : ' toggled'}`}
       id="accordionSidebar"
+      style={{
+        backgroundColor: palette.sidebarPrimary,
+      }}
     >
       <Brand
         className="sidebar-brand d-flex align-items-center justify-content-center"

@@ -1,6 +1,8 @@
+import palette from '../../../WebTheme/palette';
+
 export default theme => ({
   container: {
-    minWith: 500,
+    minWidth: 500,
     maxWidth: 1300,
     margin: '10px 0px 10px 35px',
   },
@@ -16,7 +18,7 @@ export default theme => ({
   },
   rectangle: {
     width: '100%',
-    backgroundColor: 'blue',
+    backgroundColor: palette.indigo500,
     height: '35%',
     maxHeight: 220,
     borderRadius: '0 0 4px 4px',

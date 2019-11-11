@@ -15,6 +15,8 @@ const lighterSecondaryButton = '#f48fb1';
 const secondaryButtonHover = 'rgba(244, 143, 177, 0.1)';
 const boxShadowLightGrey = 'rgba(0,0,0,0.12)';
 const indigo500 = '#3f51b5';
+const black900 = '#212121';
+const sidebarPrimary = '#2f2e2e';
 
 const palette = {
   white,
@@ -34,6 +36,8 @@ const palette = {
   secondaryButtonHover,
   lighterSecondaryButton,
   indigo500,
+  black900,
+  sidebarPrimary,
 };
 
 export default palette;
