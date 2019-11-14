@@ -7,7 +7,12 @@ const AdminCourses = ({
   ...restOfProps
 }) => {
 
-  return <VirtualizedTable {...restOfProps} />;
+  return (
+    <div className={classes.container}>
+      <VirtualizedTable {...restOfProps} />
+    </div>
+  );
+
 };
 
 AdminCourses.defaultProps = {
@@ -15,7 +20,7 @@ AdminCourses.defaultProps = {
 };
 
 AdminCourses.propTypes = {
-
+  classes: PropTypes.object.isRequired,
 };
 
 export default AdminCourses;

@@ -1,5 +1,8 @@
 import React from 'react';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Typography from '@material-ui/core/Typography';
+import { Button } from '../../../WebUI/Buttons';
 
 const getStyleProps = (widthInPercent, centered = false) => ({
   style: {
@@ -19,46 +22,60 @@ const config = ({ onEdit, onDelete }) => [
     dataKey: 'index',
   },
   {
-    ...getStyleProps(12),
+    ...getStyleProps(10),
     label: 'Course Id',
     dataKey: 'courseId',
   },
   {
-    ...getStyleProps(24),
+    ...getStyleProps(23),
     label: 'Course Name',
     dataKey: 'courseName',
   },
   {
-    ...getStyleProps(9.5, true),
+    ...getStyleProps(8.5, true),
     label: 'Year',
     dataKey: 'year',
   },
   {
-    ...getStyleProps(10, true),
+    ...getStyleProps(8.25, true),
     label: 'Section',
     dataKey: 'section',
   },
   {
-    ...getStyleProps(10, true),
+    ...getStyleProps(8.25, true),
     label: 'Semester',
     dataKey: 'semester',
   },
   {
-    ...getStyleProps(15),
+    ...getStyleProps(12),
     label: 'Instructor',
     dataKey: 'instructor',
   },
   {
-    ...getStyleProps(12),
+    ...getStyleProps(13, true),
     label: 'Editar',
     dataKey: 'edit',
-    cellRenderer: (props, callback) => <ButtonBase onClick={onEdit}>{callback(props)}</ButtonBase>
+    cellRenderer: ({ cellData, classes }) => (
+      <Button onClick={onEdit} className={classes.button} buttonType="edit">
+        <EditIcon fontSize="small" />
+        <Typography variant="body2" className={classes.editText}>
+          {cellData}
+        </Typography>
+      </Button>
+    )
   },
   {
-    ...getStyleProps(12),
+    ...getStyleProps(13, true),
     label: 'Eliminar',
     dataKey: 'delete',
-    cellRenderer: (props, callback) => <ButtonBase onClick={onDelete}>{callback(props)}</ButtonBase>
+    cellRenderer: ({ cellData, classes }) => (
+      <Button onClick={onDelete} className={classes.button} buttonType="delete">
+        <DeleteIcon fontSize="small" />
+        <Typography variant="body2" className={classes.deleteText}>
+          {cellData}
+        </Typography>
+      </Button>
+    )
   },
 ];
 

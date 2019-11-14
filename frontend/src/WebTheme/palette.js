@@ -17,6 +17,10 @@ const boxShadowLightGrey = 'rgba(0,0,0,0.12)';
 const indigo500 = '#3f51b5';
 const black900 = '#212121';
 const sidebarPrimary = '#2f2e2e';
+const dangerButton = '#c62828';
+const dangerButtonHover = '#c62828ba';
+const editButton = '#1565c0';
+const editButtonHover = '#1565c0a6';
 
 const palette = {
   white,
@@ -38,6 +42,10 @@ const palette = {
   indigo500,
   black900,
   sidebarPrimary,
+  dangerButton,
+  dangerButtonHover,
+  editButton,
+  editButtonHover,
 };
 
 export default palette;
