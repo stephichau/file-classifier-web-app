@@ -20,7 +20,7 @@ const VirtualizedTable = ({
     });
   };
 
-  const cellRenderer = ({ cellData, columnIndex }) => (
+  const cellRenderer = ({ cellData, columnIndex, optionCellRenderer }) => (
     <TableCell
       component="div"
       className={classnames(classes.tableCell, classes.flexContainer, {
@@ -30,7 +30,7 @@ const VirtualizedTable = ({
       style={{ height: rowHeight }}
       align={(columnIndex != null && columns[columnIndex].numeric) || false ? 'right' : 'left'}
     >
-      {cellData}
+      {optionCellRenderer ? optionCellRenderer({ cellData, classes }) : cellData}
     </TableCell>
   );
 
@@ -61,7 +61,10 @@ const VirtualizedTable = ({
           {...restOfProps}
           rowClassName={getRowClassName}
         >
-          {columns.map(({ dataKey, ...other }, index) => {
+          {columns.map(({ dataKey, cellRenderer: optionCellRenderer, ...other }, index) => {
+            const cell = (props) => {
+              return cellRenderer({ ...props, optionCellRenderer });
+            };
             return (
               <Column
                 key={dataKey}
@@ -72,7 +75,7 @@ const VirtualizedTable = ({
                   })
                 }
                 className={classes.flexContainer}
-                cellRenderer={cellRenderer}
+                cellRenderer={cell}
                 dataKey={dataKey}
                 {...other}
               />
@@ -95,7 +98,7 @@ VirtualizedTable.propTypes = {
       dataKey: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       numeric: PropTypes.bool,
-      width: PropTypes.number.isRequired,
+      width: PropTypes.number,
     }),
   ).isRequired,
   headerHeight: PropTypes.number,

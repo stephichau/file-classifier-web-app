@@ -38,4 +38,10 @@ export default theme => ({
   noClick: {
     cursor: 'initial',
   },
+  button: {
+    minWidth: 'unset',
+  },
+  text: {
+    marginLeft: 5,
+  },
 });
