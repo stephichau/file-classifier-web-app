@@ -9,11 +9,16 @@ import {
   Course,
 } from '../WebApp/Containers';
 
+import {
+  AdminCourses,
+} from '../WebApp/Admin';
+
 const routes = ({
   ...restOfProps
 }) => (
   <Switch>
     <Route exact path="/" component={Home} {...restOfProps} />
+    <Route exact path="/admin/courses" component={AdminCourses} {...restOfProps}  />
     <Route exact path="/courses" component={Courses} {...restOfProps}  />
     <Route path="/courses/:courseId" component={Course} {...restOfProps}  />
     <Route path="/404" component={NotFound} {...restOfProps} />

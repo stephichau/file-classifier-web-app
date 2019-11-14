@@ -61,7 +61,13 @@ const VirtualizedTable = ({
           {...restOfProps}
           rowClassName={getRowClassName}
         >
-          {columns.map(({ dataKey, ...other }, index) => {
+          {columns.map(({ dataKey, cellRenderer: optionCellRenderer, ...other }, index) => {
+            const cell = (props) => {
+              if (optionCellRenderer) {
+                return optionCellRenderer(props, cellRenderer);
+              }
+              return cellRenderer(props);
+            };
             return (
               <Column
                 key={dataKey}
@@ -72,7 +78,7 @@ const VirtualizedTable = ({
                   })
                 }
                 className={classes.flexContainer}
-                cellRenderer={cellRenderer}
+                cellRenderer={cell}
                 dataKey={dataKey}
                 {...other}
               />
@@ -95,7 +101,7 @@ VirtualizedTable.propTypes = {
       dataKey: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       numeric: PropTypes.bool,
-      width: PropTypes.number.isRequired,
+      width: PropTypes.number,
     }),
   ).isRequired,
   headerHeight: PropTypes.number,
