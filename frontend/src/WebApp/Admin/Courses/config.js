@@ -58,7 +58,7 @@ const config = ({ onEdit, onDelete }) => [
     cellRenderer: ({ cellData, classes }) => (
       <Button onClick={onEdit} className={classes.button} buttonType="edit">
         <EditIcon fontSize="small" />
-        <Typography variant="body2" className={classes.editText}>
+        <Typography variant="body2" className={classes.text}>
           {cellData}
         </Typography>
       </Button>
@@ -71,7 +71,7 @@ const config = ({ onEdit, onDelete }) => [
     cellRenderer: ({ cellData, classes }) => (
       <Button onClick={onDelete} className={classes.button} buttonType="delete">
         <DeleteIcon fontSize="small" />
-        <Typography variant="body2" className={classes.deleteText}>
+        <Typography variant="body2" className={classes.text}>
           {cellData}
         </Typography>
       </Button>
