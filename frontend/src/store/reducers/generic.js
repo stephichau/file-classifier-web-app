@@ -33,6 +33,15 @@ const genericReducer = (state = INITIAL_STATE, action) => {
         loading: false,
       }
     };
+  } else if (type.endsWith('_RESET')) {
+    return {
+      ...state,
+      [name]: {
+        error: null,
+        payload: null,
+        loading: false,
+      },
+    };
   }
   return state;
 };

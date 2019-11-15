@@ -21,6 +21,8 @@ const dangerButton = '#c62828';
 const dangerButtonHover = '#c62828ba';
 const editButton = '#1565c0';
 const editButtonHover = '#1565c0a6';
+const addButton = '#37474f';
+const addButtonHover = '#37474fa3';
 
 const palette = {
   white,
@@ -46,6 +48,8 @@ const palette = {
   dangerButtonHover,
   editButton,
   editButtonHover,
+  addButton,
+  addButtonHover,
 };
 
 export default palette;
