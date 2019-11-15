@@ -15,7 +15,7 @@ const getStyleProps = (widthInPercent, centered = false) => ({
   },
 });
 
-const config = ({ onEdit, onDelete }) => [
+const config = ({ onEdit, onDelete, rows }) => [
   {
     ...getStyleProps(5),
     label: '#',
@@ -28,8 +28,8 @@ const config = ({ onEdit, onDelete }) => [
   },
   {
     ...getStyleProps(23),
-    label: 'Course Name',
-    dataKey: 'courseName',
+    label: 'Uuid',
+    dataKey: 'uuid',
   },
   {
     ...getStyleProps(8.5, true),
@@ -68,8 +68,8 @@ const config = ({ onEdit, onDelete }) => [
     ...getStyleProps(13, true),
     label: 'Eliminar',
     dataKey: 'delete',
-    cellRenderer: ({ cellData, classes }) => (
-      <Button onClick={onDelete} className={classes.button} buttonType="delete">
+    cellRenderer: ({ cellData, classes, rowIndex }) => (
+      <Button onClick={() => onDelete({ ...rows[rowIndex] })} className={classes.button} buttonType="delete">
         <DeleteIcon fontSize="small" />
         <Typography variant="body2" className={classes.text}>
           {cellData}

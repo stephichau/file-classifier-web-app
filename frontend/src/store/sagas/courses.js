@@ -35,8 +35,20 @@ function* getCourse({ props }) {
   }
 }
 
+function* deleteCourse({ props }) {
+  try {
+    const response = yield call(API.courses.delete, props);
+    yield put({ type: actions.courses.DELETE_COURSE_SUCCESS, payload: [true] });
+  } catch (error) {
+    const type = actions.courses.DELETE_COURSE_FAILURE;
+    console.log(error);
+    yield put({ type, error: 'Error' });
+  }
+}
+
 export default function* coursesSagas() {
   yield takeLatest(actions.courses.GET_COURSES_REQUEST, getCourses);
   yield takeLatest(actions.courses.POST_COURSE_REQUEST, postCourse);
   yield takeLatest(actions.courses.GET_COURSE_REQUEST, getCourse);
+  yield takeLatest(actions.courses.DELETE_COURSE_REQUEST, deleteCourse);
 }

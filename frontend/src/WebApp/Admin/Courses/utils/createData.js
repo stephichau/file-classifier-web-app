@@ -1,9 +1,9 @@
 export default (
-  index, courseId, courseName, year, section, semester, instructor, edit = 'editar', del = 'eliminar',
+  index, { name: courseId, uuid, year, section, semester, instructor }, edit = 'editar', del = 'eliminar',
 ) => ({
   index,
   courseId,
-  courseName,
+  uuid,
   year,
   semester,
   section,

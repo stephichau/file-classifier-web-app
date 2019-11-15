@@ -30,7 +30,7 @@ export default (props) => {
   } = actions;
 
   const fetchedCourses = get(generic, `${[GET_COURSES]}.payload`, undefined);
-  const loading = get(generic, `${[GET_COURSES].loading}`) || false;
+  const loading = get(generic, `${[GET_COURSES]}.loading`) || false;
   const courseCount = get(fetchedCourses, 'length', null) || defaultCourses.length;
 
   if (typeof fetchedCourses === 'undefined' && !loading) getCourses();

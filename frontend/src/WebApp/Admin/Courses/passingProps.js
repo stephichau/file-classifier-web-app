@@ -1,34 +1,45 @@
 import get from 'loadsh/get';
 import config from './config';
 import createData from './utils/createData';
+import shouldFetchCourses from './utils/fetchCourses';
+import actions from '../../../store/actions';
+const {
+  courses: {
+    GET_COURSES,
+    DELETE_COURSE,
+    DELETE_COURSE_RESET,
+  },
+} = actions;
 
 export default (props) => {
+  const {
+    generic,
+    getCourses,
+    deleteCourse,
+    resetState,
+  } = props;
 
-  const sample = [
-    ['IIC2333', 'Sistema Operativos y Redes', 2019, 1, 1, 'Ruz'],
-    ['IIC2333', 'Sistema Operativos y Redes', 2019, 1, 1, 'Ruz'],
-    ['IIC2233', 'Programación Avanzada', 2019, 1, 1, 'Ruz'],
-    ['IIC2233', 'Programación Avanzada', 2019, 1, 2, 'Florenzano'],
-    ['IIC2513', 'Tecnología y Aplicaciones Web', 2019, 1, 1, 'Vidal'],
-    ['IIC2513', 'Tecnología y Aplicaciones Web', 2019, 1, 1, 'Vidal'],
-    ['IIC2513', 'Tecnología y Aplicaciones Web', 2019, 1, 1, 'Vidal'],
-  ];
+  const deletedCourse = get(generic, `${[DELETE_COURSE]}.payload`) || [];
+  
+  if (shouldFetchCourses({ courseState: generic[GET_COURSES] }) || (deletedCourse.length > 0)) getCourses();
+  
+  const coursesLoading = get(generic, `${[GET_COURSES]}.loading`) || false;
+  if (deletedCourse.length > 0 && coursesLoading) resetState({ type: DELETE_COURSE_RESET });
 
-  const rows = [];
-  for (let i = 0; i < 200; i += 1) {
-    const randomSelection = sample[Math.floor(Math.random() * sample.length)];
-    rows.push(createData(i + 1, ...randomSelection));
-  }
+  const courses = get(generic, `${[GET_COURSES]}.payload`) || [];
 
-  const onEdit = () => {};
-  const onDelete = () => {};
+  const rows = courses.map((course, index) => createData(index + 1, { ...course }));
+
+  const onEdit = ({ uuid }) => {};
+  const onDelete = ({ uuid }) => deleteCourse(uuid);
 
   return {
     ...props,
     rowCount: rows.length,
     rowGetter: ({ index }) => rows[index],
-    columns: [...config({ onEdit, onDelete })],
+    columns: [...config({ onEdit, onDelete, rows })],
     headerHeight: 48,
     rowHeight: 48,
+    loading: coursesLoading,
   };
 };

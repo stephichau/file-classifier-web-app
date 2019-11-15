@@ -19,6 +19,11 @@ const courses = {
       'accept': 'application/json'
     },
   }),
+  delete: courseUuid => axios.delete(`/courses/${courseUuid}`, {
+    headers: {
+      'accept': 'application/json'
+    },
+  }),
 };
 
 export default courses;
