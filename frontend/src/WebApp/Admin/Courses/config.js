@@ -56,7 +56,7 @@ const config = ({ onEdit, onDelete, rows }) => [
     label: 'Editar',
     dataKey: 'edit',
     cellRenderer: ({ cellData, classes }) => (
-      <Button onClick={onEdit} className={classes.button} buttonType="edit">
+      <Button onClick={onEdit} className={classes.button} buttonType="edit" disabled>
         <EditIcon fontSize="small" />
         <Typography variant="body2" className={classes.text}>
           {cellData}

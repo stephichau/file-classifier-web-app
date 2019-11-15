@@ -9,12 +9,14 @@ const Button = ({
   buttonType,
   variant,
   children,
+  disabled,
 }) => {
   return (
     <MUIButton
       variant={variant}
       onClick={onClick}
       className={classnames(classes.button, classes.default, classes[buttonType])}
+      disabled={disabled}
     >
       {children}
     </MUIButton>
@@ -25,6 +27,7 @@ Button.defaultProps = {
   children: null,
   buttonType: '',
   variant: 'contained',
+  disabled: false,
 };
 
 Button.propTypes = {
@@ -33,6 +36,7 @@ Button.propTypes = {
   buttonType: PropTypes.oneOf(['edit', 'delete']),
   children: PropTypes.node,
   variant: PropTypes.string,
+  disabled: PropTypes.bool,
 }
 
 export default Button;
