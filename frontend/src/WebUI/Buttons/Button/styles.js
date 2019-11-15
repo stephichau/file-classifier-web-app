@@ -24,4 +24,10 @@ export default () => ({
       backgroundColor: palette.dangerButtonHover,
     },
   },
+  add: {
+    backgroundColor: palette.addButton,
+    '&:hover': {
+      backgroundColor: palette.addButtonHover,
+    },
+  },
 });
