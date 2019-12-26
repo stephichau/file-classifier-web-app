@@ -5,7 +5,6 @@ export default theme => ({
     border: `1px solid ${palette.boxShadowLightGrey}`,
     borderBottom: 0,
     minHeight: 100,
-    maxHeight: 500,
     minWidth: 300,
     maxWidth: 500,
   },
