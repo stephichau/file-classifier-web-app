@@ -3,7 +3,6 @@ import palette from '../../../WebTheme/palette';
 export default theme => ({
   container: {
     minWidth: 500,
-    maxWidth: 1300,
     margin: '10px 0px 10px 35px',
   },
   cardContainer: {

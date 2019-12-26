@@ -4,14 +4,12 @@ export default theme => ({
   container: {
     border: `1px solid ${palette.boxShadowLightGrey}`,
     borderBottom: 0,
-    minHeight: 200,
-    maxHeight: 500,
+    minHeight: 100,
     minWidth: 300,
     maxWidth: 500,
-    paddingBottom: 20,
-    marginBottom: 20,
   },
   title: {
+    position: 'sticky',
     margin: '20px auto',
     display: 'flex',
     justifyContent: 'center',
@@ -21,7 +19,8 @@ export default theme => ({
     },
   },
   inputContainer: {
-    maxHeight: 350,
+    minHeight: 50,
+    maxHeight: 'calc(60vh - 100px)',
     overflowY: 'scroll',
     margin: '10px 0',
     padding: '0 20px',
@@ -30,7 +29,8 @@ export default theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
     marginRight: 20,
-    marginTop: 20,
+    padding: '20px 0',
+    position: 'sticky',
   },
   cancelButton: {
     backgroundColor: palette.secondaryButton,
